@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\vipgetcookie]
+@="URL:vipgetcookie Protocol"
+"URL Protocol"="F:\\PHP\\python\\monitoring\\vip\\vipgetcookie.exe"
+[HKEY_CLASSES_ROOT\vipgetcookie\DefaultIcon]
+@="F:\\PHP\\python\\monitoring\\vip\\vipgetcookie.exe,1"
+ 
+[HKEY_CLASSES_ROOT\vipgetcookie\shell]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\vipgetcookie\shell\open]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\vipgetcookie\shell\open\command]
+@="\"F:\\PHP\\python\\monitoring\\vip\\vipgetcookie.exe\" \"%1\""

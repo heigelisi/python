@@ -1,0 +1,5 @@
+('F:\\PHP\\python\\monitoring\\getcookieone\\build\\getcookieone\\beautifulsoup4-4.6.0-py3.6.egg',
+ None,
+ {'*.pyd', '*.pyo', 'EGG-INFO', '*.py', '*.pyc', '*.so'},
+ 'DATA',
+ [])
