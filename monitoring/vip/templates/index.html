@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vip-app</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<style type="text/css">
+		/*td{text-align: center;}*/
+	</style>
+</head>
+<body>
+	<table  width="100%">
+		<tr>
+			<th>序号</th>
+			<th>cookie</th>
+			<th>备注</th>
+			<th>网站名称</th>
+			<th>网站链接</th>
+			<th>用户名</th>
+			<th>密码</th>
+			<th>操作</th>
+		</tr>
+		{% for k,v in data.items(): %}
+		<tr class="tr">
+			<td style="text-align: center;}">{{ k }}</td>
+			<td style="text-align: center;}">
+				{% if v[6] == '是' %}
+					<font color="#00f">是</font>
+				{% else %}
+					<font color="#f00">否</font>
+				{% endif %}				
+			</td>
+			<td type="nots" id="{{ v[0] }}" class="username">{{ v[5] }}</td>
+			<td type="name" id="{{ v[0] }}" class="username">{{ v[1] }}</td>
+			<td type="url" id="{{ v[0] }}" class="username">{{ v[2] }}</td>
+			<td id="{{ v[0] }}" type="username" class="username">{{ v[3] }}</td>
+			<td id="{{ v[0] }}" type="password" class="username" >{{ v[4] }}</td>
+			<td><a href="javascript:getcookie('{{ v[0] }}');">获取cookie</a></td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</body>
+<script type="text/javascript">
+	$('.username').on('dblclick',function(){
+		usernameobj = $('.username')
+		
+		for(i = 0;i <= usernameobj.length;i++){
+			text = $('.username').eq(i).text()
+			if (!text){
+				text = $('.username').eq(i).find('input').val()
+			}
+			$('.username').eq(i).html(text)
+		}
+		username = $(this).text()
+		$(this).html("<input type='text' value='"+username+"' />")
+		$(this).find('input').focus()
+		// $(this).find('input').setSelectionRange(0,300)
+
+
+
+	})
+	$('.username').on('change',function(){
+		username = $(this).find('input').val()
+		id = $(this).attr('id')
+		type = $(this).attr('type')
+		$(this).html(username);
+		$.post('/updateusername',{'type':type,'id':id ,'username':username},function(res){
+		})
+		
+		})
+
+	$('.tr').hover(function(){
+		$(this).css('background','#f00')
+
+	},function(){
+		$(this).css('background','#fff')
+		
+	})
+
+</script>
+<script type="text/javascript">
+	function getcookie(id){
+		$.post('/getcookie',{'id':id},function(res){
+			if (res){
+				window.location.href="vipgetcookie://"
+			}
+		})
+	}
+</script>
+</html>
