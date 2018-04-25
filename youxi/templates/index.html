@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/images/favicon.ico.png">
+    <meta charset="utf-8">
+    <title>澳门威尼斯人</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/Swiper-3.4.2/dist/css/swiper.min.css">
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div id="logo">
+                <a href="/" title="澳门威尼斯人">
+                    <img src="{{ config['logo'] }}logo.png" alt="澳门威尼斯人">
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a r="swiper-container" href="javascript:;">
+                            <h3 style="color:#f00">首页</h3>
+                            <h3>HOME</h3>
+                        </a>
+                    </li>
+                     <li>
+                        <a r="qipai" href="javascript:;" title="经典棋牌">
+                            <h3>经典棋牌</h3>
+                            <h3>CLASSIC</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="shishicai" href="javascript:;" title="彩票游戏">
+                            <h3>彩票游戏</h3>
+                            <h3>LOTTERY</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="casino" href="javascript:;" title="真人视讯">
+                            <h3>真人视讯</h3>
+                            <h3>CASINO</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="sports" href="javascript:;" title="皇冠体育">
+                            <h3>皇冠体育</h3>
+                            <h3>SPORTS</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="slots" href="javascript:;" title="电子游艺">
+                            <h3>电子游艺</h3>
+                            <h3>SLOTS</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="mg" href="javascript:;" title="MG角子机">
+                            <h3>MG角子机</h3>
+                            <h3>MG SLOTS</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="pt" href="javascript:;" title="PT老虎机">
+                            <h3>PT老虎机</h3>
+                            <h3>PT SLOTS</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a r="qt" href="javascript:;" title="开元棋牌">
+                            <h3>开元棋牌</h3>
+                            <h3>CHESS</h3>
+                        </a>
+                    </li>
+                   
+                    <li>
+                        <a r="activity" href="javascript:;" title="优惠活动">
+                            <h3>优惠活动</h3>
+                            <h3>ACTIVITY</h3>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="clear" style="height: 104px;"></div>
+    <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="{{ config['lunbo'] }}X3k1kC27L.png" title="" alt=""></div>
+                <div class="swiper-slide"><img src="{{ config['lunbo'] }}XzYuyOw7t.gif" title="" alt=""></div>
+                <div class="swiper-slide"><img src="{{ config['lunbo'] }}XzQcDm6t1.png" title="" alt=""></div>
+                <div class="swiper-slide"><img src="{{ config['lunbo'] }}XzQlehC2H.jpg" title="" alt=""></div>
+            </div>
+            <div class="swiper-pagination"></div>
+
+            {% if userdata: %}
+            <div class="userdata">
+                 <p>欢迎光临WELCOME</p>
+                <div class="input">
+                        <span style="color: #fff;font-size: 14px;">账号：</span><span style="color: #fff13f;font-size: 12px;">{{ userdata }}</span>
+                </div>
+                <div class="input">
+                        <span style="color: #fff;font-size: 14px;">账号余额：</span><span style="color: #fff13f;font-size: 12px;">*****</span>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li><a href="javascript:operation();" style="color: #fff13f;">线上存款</a></li>
+                        <li><a href="javascript:operation();">交易记录</a></li>
+                        <li><a href="javascript:operation();">线上取款</a></li>
+                        <li><a href="javascript:operation();">投注记录</a></li>
+                    </ul>
+                </div>
+                <div class="input" style="text-align: center;">
+                    <button><a href="/loginout">退出登录</a></button>
+                </div>
+            </div>
+            {% else: %}
+            <div class="login">
+                <p>会员登录LOGIN</p>
+                <form method="post" action="/login" id="loginform">
+                    <div class="input">
+                        <input type="text" name="username" placeholder="账号">
+                    </div>
+                    <div class="input">
+                        <input type="password" name="password" placeholder="密码">
+                    </div>
+                    <div class="input">
+                        <input style="display: inline-block;float:left;width: 50%;"  type="text" name="code" placeholder="验证码">
+                        <img src="/code" style="float:left;height: 31px;" onclick="this.src ='/code?'+Math.random()">
+                    </div>
+                    <div>
+                        <button type="button" id="loginsubmit" style="background-image: url(/static/images/login_btn.jpg);color: #fff;">登入</button>
+                        <button type="button" style="background-image: url(/static/images/reg_btn.jpg);"><a href="javascript:reg();">免费开户</a></button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+    </div>
+
+    <div class="gonggao">
+        <div class="msgtitle"><img src="/static/images/news_icon.png"> &nbsp;最新消息：</div>
+        <div class="msg">
+            <marquee scrollamount="10" scrolldelay="100" direction="left" onmouseover="this.stop();" style="padding-top: 5px;" onmouseout="this.start();"><span style="color: rgb(255, 0, 0);">尊敬的会员您好，为保证您能正常出款，请注册账号成功后立即点击网站的</span><span style="font-size: 20px;"><strong><span style="color: rgb(112, 48, 160);">“会员中心“</span></strong><strong><span style="color: rgb(112, 48, 160);">“提现”</span></strong></span><span style="color: rgb(255, 0, 0);">填写</span><span style="font-size: 20px;"><strong><span style="color: rgb(112, 48, 160);">‘真实姓名</span></strong></span><span style="font-size: 20px;"><strong><span style="color: rgb(112, 48, 160);">’</span></strong></span><span style="color: rgb(255, 0, 0);">设置</span><span style="font-size: 20px;"><strong><span style="color: rgb(112, 48, 160);">‘资金密码’</span></strong></span><span style="color: rgb(255, 0, 0);">并绑定您的银行卡信息，请您牢记设置的资金密码（资金密码是为保障您的资金安全，请您务必牢记）谢谢合作，祝您游戏愉.快最佳存款方式推荐：微信/手机银行/网银转账☛转公司入款☛大额转账无忧☛次次存 次次送☞立即享受2.0%入款优惠，更多详情请咨询在线客服，威尼斯人祝您盈利多多！！！</span></marquee>
+        </div>
+    </div>
+
+    <div class="navs">
+        <div>
+            <ul>
+                <li style="margin-left:0px;">
+                    <a href="javascript:operation();" title="MG电子">
+                        <img src="{{ config['top'] }}mg.png" alt="MG电子">
+                        <p>MG电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="BBIN电子">
+                        <img src="{{ config['top'] }}bb.png" alt="BBIN电子">
+                        <p>BBIN电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="AG电子">
+                        <img src="{{ config['top'] }}ag.png" alt="AG电子">
+                        <p>AG电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="GNS电子">
+                        <img src="{{ config['top'] }}gns.png" alt="GNS电子">
+                        <p>GNS电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="MW电子">
+                        <img src="{{ config['top'] }}mw.png" alt="MW电子">
+                        <p>MW电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="HB电子">
+                        <img src="{{ config['top'] }}hb.png" alt="HB电子">
+                        <p>HB电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="PP电子">
+                        <img src="{{ config['top'] }}pp.png" alt="PP电子">
+                        <p>PP电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="GPI电子">
+                        <img src="{{ config['top'] }}gpi.png" alt="GPI电子">
+                        <p>GPI电子</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="JDB电子">
+                        <img src="{{ config['top'] }}jdb.png" alt="JDB电子">
+                        <p>JDB电子</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="theme">
+        <div class="left">
+            <ul>
+                <li>
+                    <a href="javascript:operation();" title="彩票游戏">
+                        <img src="{{ config['jieshao'] }}casino_lottery.jpg" alt="彩票游戏">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="真人娱乐">
+                        <img src="{{ config['jieshao'] }}casino_live.jpg" alt="真人娱乐">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="皇冠体育">
+                        <img src="{{ config['jieshao'] }}casino_sport.jpg" title="皇冠体育">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="电子游戏">
+                        <img src="{{ config['jieshao'] }}casino_slot.jpg" alt="电子游戏">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <img src="/static/info_moblie.jpg" style="height: 100%;width:100%;">
+        </div>
+    </div>
+
+
+    <div class="clear" style="height:10px;"></div>
+    <div class="qipai">
+        <div>
+            <ul>
+                {% for r in qipai: %}
+                <li>
+                    <a href="javascript:operation();" title="{{ r[0] }}">
+                        <img data-src="{{ config['qipai'] }}{{ r[1] }}" alt="{{ r[0] }}">
+                        <p>{{ r[0] }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="shishicai">
+        <div>
+            <ul>
+                <li style="margin-left: 0px;">
+                    <a href="javascript:operation();" title="重庆时时彩">
+                        <img src="/static/images/cq.png" alt="重庆时时彩">
+                        <p>重庆时时彩</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="天津时时彩">
+                        <img src="/static/images/tj.png" alt="天津时时彩">
+                        <p>天津时时彩</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="新疆时时彩">
+                        <img src="/static/images/xj.png" alt="新疆时时彩">
+                        <p>新疆时时彩</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="一分时时彩">
+                        <img src="/static/images/FFC.png" alt="一分时时彩">
+                        <p>一分时时彩</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="二分时时彩">
+                        <img src="/static/images/EFC.png" alt="二分时时彩">
+                        <p>二分时时彩</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:operation();" title="五分时时彩">
+                        <img src="/static/images/WFC.png" alt="五分时时彩">
+                        <p>五分时时彩</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="casino">
+        <div>
+            <div class="top">
+                <ul>
+                    <li>女优厅(AG)</li>
+                    <li>太阳厅(DS)</li>
+                    <li>台湾厅(BBIN)</li>
+                    <li>欧美厅(MG)</li>
+                    <li>亚洲厅(AB)</li>
+                    <li>东方厅(OG)</li>
+                </ul>
+            </div>
+            <div class="nvyou">
+                <a title="女优厅(AG)" href="javascript:operation();"><img src="{{ config['nvyou'] }}ag02.jpg" alt="女优厅(AG)"></a>
+                <a title="太阳厅(DS)" href="javascript:operation();"><img src="{{ config['nvyou'] }}ds02.jpg" alt="太阳厅(DS)"></a>
+                <a title="台湾厅(BBIN)" href=""><img src="{{ config['nvyou'] }}bb02.jpg" alt="台湾厅(BBIN)"></a>
+                <a title="欧美厅(MG)" href="javascript:operation();"><img src="{{ config['nvyou'] }}mg02.jpg" alt="欧美厅(MG)"></a>
+                <a title="洲厅(AB)" href="javascript:operation();"><img src="{{ config['nvyou'] }}ab02.jpg" alt="洲厅(AB)"></a>
+                <a title="东方厅(OG)" href="javascript:operation();"><img src="{{ config['nvyou'] }}og02.jpg" alt="东方厅(OG)"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="sports"><a href="javascript:operation();" title="皇冠体育"><img src="{{ config['huangguan'] }}banner1.jpg" alt="皇冠体育"></a></div>
+
+    <div class="slots">
+        <div>
+            <ul>
+                {% for r in ag: %}
+                <li>
+                    <a href="javascript:operation();" title="{{ r[0] }}">
+                        <img data-src="{{ config['ag'] }}{{ r[1] }}" alt="{{ r[0] }}">
+                        <p>{{ r[0] }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="mg">
+        <div>
+            <ul>
+                {% for r in mg: %}
+                <li>
+                    <a href="javascript:operation();" title="{{ r[0] }}">
+                        <img data-src="{{ config['mg'] }}{{ r[1] }}" alt="{{ r[0] }}">
+                        <p>{{ r[0] }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="pt">
+        <div>
+            <ul>
+                {% for r in pt: %}
+                <li>
+                    <a href="javascript:operation();" title="{{ r[0] }}">
+                        <img data-src="{{ config['pt'] }}{{ r[1] }}" alt="{{ r[0] }}">
+                        <p>{{ r[0] }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="qt">
+        <div>
+            <ul>
+                {% for r in qt: %}
+                <li>
+                    <a href="javascript:operation();" title="{{ r[0] }}">
+                        <img data-src="{{ config['qt'] }}{{ r[1] }}" alt="{{ r[0] }}">
+                        <p>{{ r[0] }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="activity"></div>
+    <footer>
+        <div>
+            <div class="top">
+                <ul>
+                    <li>
+                        <p>客服 / 微信</p>
+                        <p>wnsr3210</p>
+                    </li>
+                    <li>
+                        <p>联系邮箱 / MAIL</p>
+                        <p>2562512777@qq.com</p>
+                    </li>
+                    <li>
+                        <p>客服 / QQ</p>
+                        <p>653983210</p>
+                    </li>
+                    <li>
+                        <p>在线客服 / Online</p>
+                        <p>7x24小时</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="center">
+                <img src="{{ config['logo'] }}footerlogo_venetian.png" style="margin-left: 0px;">
+                <img src="{{ config['logo'] }}footerlogo_bb.png">
+                <img src="{{ config['logo'] }}footerlogo_ag.png">
+                <img src="{{ config['logo'] }}footerlogo_mg.png">
+                <img src="{{ config['logo'] }}footerlogo_pt.png">
+                <img src="{{ config['logo'] }}footerlogo_fifa.png">
+                <img src="{{ config['logo'] }}footerlogo_sg.png">
+                <img src="{{ config['logo'] }}footerlogo_cq9.png">
+                <img src="{{ config['logo'] }}footerlogo_gns.png">
+            </div>
+            <div class="center_bottom">
+                <ul>
+                    <li><a href="javascript:operation();">关于我们</a></li>
+                    <li><a href="javascript:operation();">手机投注</a></li>
+                    <li><a href="javascript:operation();">代理加盟</a></li>
+                    <li><a href="javascript:operation();">常见问题</a></li>
+                    <li><a href="javascript:operation();">存款帮助</a></li>
+                    <li><a href="javascript:operation();">取款帮助</a></li>
+                    <li><a href="javascript:operation();">联系我们</a></li>
+                    <li><a href="javascript:operation();">客戶端</a></li>
+                </ul>
+            </div>
+            <div class="bottom">
+                <p>澳门威尼斯人所提供的产品和服务，是由澳门特别行政区 The Macao Special Administrative Region.授权和监管。选择我们，您将拥有可靠的资金保障和优质的服务。</p>
+                <p>Copyright © 澳门威尼斯人 Reserved E-mail：CS@VN.CC 電話：00853-62594888</p>
+            </div>
+            
+        </div>
+    </footer>
+<div class="clear"></div>
+<a href="javascript:;" id="top" style='color:#f00'>返回顶部</a>
+<div class="clear"></div>
+{% if not userdata: %}
+<div class="reg">
+    <p style="width: 100%;text-align: right;padding-right: 5px;padding-top:5px;color: #fff;cursor:pointer;" class="exit">X&nbsp;&nbsp;</p>
+    <div class="regcont">
+        <form id="form" action="/reg">
+            <div style="height: 15px;border: none;"></div>
+            <div><span>帐 号：</span><input type="text" name="accountR" onchange="verifyusername(this);" placeholder=""></div> 
+            <p>5~11个字符，包括字母、数字，以字母开头，字母或数字结尾</p>           
+
+            <div><span>密 码：</span><input type="password" name="passwordR" placeholder=""></div>            
+            <p>6~12个字符，包括字母、数字、特殊符号，区分大小写</p>
+
+            <div><span>确认密码：</span><input type="password" name="renewpassword" placeholder=""></div>            
+            <p>请再次输入密码</p>           
+
+            <div><span>真实姓名：</span><input type="text" name="userName" placeholder=""></div> 
+            <p>必须与您的银行帐户名称相同，否则不能出款!<br>真实姓名为提款金额时的凭证，请会员务必填写详细资料</p>  
+
+            <div><span>手机：</span><input type="text" name="phone" placeholder=""></div>   
+            <p>手机与取款密码为取款金额时的凭证,请会员务必填写详细资料</p>  
+            <div><span>验证码：</span><input style="width: 200px;" type="text" name="verifyCodeR" placeholder=""><img src="/code" style="height: 26px;margin-top: 2px;" onclick="this.src ='/code?'+Math.random()"></div>   
+            <p>请输入验证码</p>  
+            <div style="border: none;text-align: center;">
+                <button type="button" id="submit">确认注册</button>
+                <button type="reset">重新填写</button>
+                <button type="button" class="exit">关闭</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% else: %}
+<div class="app" onclick="$(this).css('display','none');">
+    <div>
+        <p>请下载APP</p>
+        <img src="{{ config['logo'] }}info_qrcode.jpg">
+    </div>
+</div>
+{% endif %}
+</body>
+<script type="text/javascript" src="/static/js/index.js"></script>
+<script src="/static/Swiper-3.4.2/dist/js/swiper.min.js"></script>
+<script>
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    paginationClickable: true,
+    autoplay:5000
+});
+</script>
+<script type="text/javascript">
+    function verifyusername(obj){
+        accountR = $(obj).val()
+        $.post('/verifyusername',{'accountR':accountR}, function(res){
+            if (res == 1){
+                alert('该用户名已经被注册！')
+            }
+        })
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+    $('#form').on('submit',(function(e) {
+        var accountR = $('input[name=accountR]').val();
+        var passwordR = $('input[name=passwordR]').val();
+        var renewpassword = $('input[name=renewpassword]').val();
+        var userName = $('input[name=userName]').val();
+        var phone = $('input[name=phone]').val();
+        var verifyCodeR = $('input[name=verifyCodeR]').val();
+
+        if(!accountR){
+            alert('用户名不能为空！');
+            return false;
+        }
+
+        r1 = /^[a-zA-Z]\w{4,10}$/;
+        if(!r1.test(accountR)){
+           alert('用户名错误！5~11个字符，包括字母、数字，以字母开头，字母或数字结尾');
+            return false;
+        }
+
+        if(!passwordR){
+           alert('密码不能为空！');
+            return false;
+        }
+        if(passwordR.length < 6 || passwordR.length > 12){
+            alert('密码错误！6~12个字符，包括字母、数字、特殊符号，区分大小写');
+            return false;
+        }
+        if(!renewpassword){
+           alert('确认密码不能为空！');
+            return false;
+        }
+        if(passwordR != renewpassword){
+           alert('两次密码不一致！');
+            return false;
+        }
+
+        if(!userName){
+           alert('真实姓名不能为空！');
+            return false;
+        }
+        regex = /^((166)|(13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/; 
+        if(!phone){
+           alert('手机号不能为空！');
+            return false;
+        }
+        if (!regex.test(phone)){
+            alert('手机号格式错误！');
+            return false;
+        }
+        if(!verifyCodeR){
+           alert('验证码不能为空！');
+            return false;
+        }
+        var formData = new FormData(this);
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url: '/reg',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success:function(data){
+               if(data == 'ok'){
+                   alert('注册成功')
+                    window.location.href="/";
+               }else{
+                   alert(data)
+               }
+            },
+            error: function(data){
+               alert('网络异常！')
+            }
+        });
+    }));
+
+    $("#submit").on("click", function() {
+        $("#form").submit();
+    });
+
+    $(document).keydown(function(event){ 
+        if(event.keyCode == 13){
+            $("#form").submit();
+        } 
+     }); 
+});
+</script>
+<script type="text/javascript">
+        $(document).ready(function (e) {
+    $('#loginform').on('submit',(function(e) {
+        var username = $('input[name=username]').val();
+        var password = $('input[name=password]').val();
+        var code = $('input[name=code]').val();
+
+        if(!username){
+            alert('用户名不能为空！');
+            return false;
+        }
+
+        if(!password){
+           alert('密码不能为空！');
+            return false;
+        }
+        
+       
+        if(!code){
+           alert('验证码不能为空！');
+            return false;
+        }
+        var formData = new FormData(this);
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url: '/login',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success:function(data){
+               if(data == 'ok'){
+                    window.location.href="/";
+               }else{
+                   alert(data)
+               }
+            },
+            error: function(data){
+               alert('网络异常！')
+            }
+        });
+    }));
+    $("#loginsubmit").on("click", function() {
+        $("#loginform").submit();
+    });
+
+    $(document).keydown(function(event){ 
+        if(event.keyCode == 13){
+            $("#loginform").submit();
+        } 
+     }); 
+});
+</script>
+<script type="text/javascript">
+    function operation(){
+        if('{{session["userdata"]}}' && '{{session["userdata"]}}' != 'None'){
+            app()
+        }else{
+            alert('请登录!')
+        }
+    }
+</script>
+</html>

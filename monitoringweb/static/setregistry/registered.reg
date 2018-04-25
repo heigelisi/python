@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\registered]
+@="URL:registered Protocol"
+"URL Protocol"="F:\\python\\monitoringweb\\exe\\registered.exe"
+ 
+[HKEY_CLASSES_ROOT\registered\DefaultIcon]
+@="F:\\python\\monitoringweb\\exe\\registered.exe,1"
+ 
+[HKEY_CLASSES_ROOT\registered\shell]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\registered\shell\open]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\registered\shell\open\command]
+@="\"F:\\python\\monitoringweb\\exe\\registered.exe\" \"%1\""

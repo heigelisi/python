@@ -1,0 +1,30 @@
+
+pip install pytesseract
+
+
+#安装tesseract-ocr
+#windows
+下载 https://pan.baidu.com/s/1D-5-Z_eet6ikPZ8nV3lGUg
+exe文件双击安装即可
+
+#linux
+1.安装 leptonica 依赖
+wget http://www.leptonica.org/source/leptonica-1.72.tar.gz
+tar xvzf leptonica-1.72.tar.gz
+cd leptonica-1.72/
+./configure
+make && make install
+
+2.安装tesseract-ocr
+https://github.com/tesseract-ocr/tesseract/archive/4.00.00dev.zip
+unzip 3.04.zip
+cd tesseract-3.04/
+./autogen.sh
+./configure
+make && make install
+sudo ldconfig
+#配置文件文章 /usr/local/share/tessdata
+#语言文件
+	GitHub地址 https://github.com/tesseract-ocr/langdata
+	创建存放语言文件的文件夹 /usr/local/share/tessdata/lang 
+	修改配置的变量 export TESSDATA_PREFIX=/some/path/to/tessdata

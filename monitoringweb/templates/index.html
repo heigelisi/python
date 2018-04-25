@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ title }}</title>
+	<script type="text/javascript" src="/static/jquery-1.8.3.min.js"></script>
+	<style type="text/css">
+		a{text-decoration:none;}
+		*{margin:0px;padding: 0px;}
+		table{border-collapse:collapse;border-right:solid 1px #FFF;}
+		th{text-align: center; border:#000 solid 1px;}
+		td{ text-align: center;border:#000 solid 1px;word-break:break-all;}
+		td a{display: inline-block;width:auto;min-width:35px;text-align: center;}
+		.header{width:100%;height:auto;min-height:30px;background:#eee;}
+		.header .search{width:100%;float:right;text-align: right;line-height: 30px;}
+		.search select{width: 100px;height: 25px;margin-right: 5px;}
+		.search input[name='q']{display: inline-block;width:150px;height: 19px;}
+		.search a{display: inline-block;width:auto;padding: 0 10px;height: 30px;text-align: center;float: right;background: #2B98D5;color: #fff;margin-right: 1px;}
+		td button{width:25px;height: 20px;border: none;cursor:pointer;}
+		input[type='checkbox']{cursor:pointer;}
+		.page a{display: inline-block;width:auto;min-width: 30px;background: #eee;text-align: center;margin-right: 3px;}
+	</style>
+</head>
+<body>
+	<center>
+		<div class="header">
+			<div class="search">
+				<form style="display: inline-block;" >
+						筛选项：
+
+						{% for key,value in screening.items() %}
+							<input style="margin-left:5px;" type="checkbox" {% if checked and key in checked %}checked{% endif %} name="screening" value="{{ key }}">{{ value }}</input>
+						{% endfor %}
+
+					关键字:<input type="text" name="q" value="{{ q }}">
+					<button type="submit" style="margin-right: 10px;cursor:pointer;">搜索</button>
+				</form>
+				
+			</div>
+		</div>
+		<div class="header">
+			<div class="search">
+				<a href="/add">添加信息</a>
+				<a href="monitoring://">推广</a>
+				<a href="getcookie://">获取COOKIE</a>
+				<a href="registered://">注册</a>
+				<a href="/updatecookie">更新COOKIE状态</a>
+			</div>
+		</div>
+		<table border="0" width="99.9%">
+			<tr>
+				<th>ID</th>
+				<th>是否执行</th>
+				<th>封号</th>
+				<th>COOKIE</th>
+				<th>类型</th>
+				<th>网站名称</th>
+				<th>网址</th>
+				<th>用户名</th>
+				<th>密码</th>
+				<th>邮箱</th>
+				<th>注册</th>
+				<th>收听</th>
+				<th>消息</th>
+				<th>好友</th>
+				<th>招呼</th>
+				<th>备注</th>
+				<th>操作</th>
+			</tr>
+			<!-- <?php $status2 = ['否','<font color=#f00>是</font>'];?> -->
+
+				{% for val in data: %}
+				<tr class="delete_{{ val[0] }} tr">
+					<td>{{ val[0] }}</td>
+					<td><button data-id="perform_{{ val[0] }}">{% if val[1]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td><button data-id="seal_{{ val[0] }}">{% if val[2]: %}<font color=#f00>是</font>{% else:%}否{% endif %}</button></td>
+					<td>{% if val[3]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</td>
+					<td class="input" id="{{ val[0] }}" type='type'>{{ val[4] }}</td>
+					<td style="text-align: left;padding-left: 5px;" class="input" id="{{ val[0] }}" type='name'> {{ val[5] }}</td>
+					
+					<td style="text-align: left;padding-left: 5px;" class="input" id="{{ val[0] }}" type='url'>{{ val[6] }}</td>
+					<td class="input" id="{{ val[0] }}" type='username'>{{ val[12] }}</td>
+					<td class="input" id="{{ val[0] }}" type='password'>{{ val[13] }}</td>
+					<td class="input" id="{{ val[0] }}" type='email'>{{ val[14] }}</td>
+					<td><button data-id="registered_{{ val[0] }}">{% if val[7]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td><button data-id="listen_{{ val[0] }}">{% if val[8]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td><button data-id="message_{{ val[0] }}">{% if val[9]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td><button data-id="friends_{{ val[0] }}">{% if val[10]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td><button data-id="hello_{{ val[0] }}">{% if val[11]: %}是{% else:%}<font color=#f00>否</font>{% endif %}</button></td>
+					<td class="input" id="{{ val[0] }}" type='note'>{{ val[15] }}</td>
+					<td>
+						<a  href="/update?id={{ val[0] }}">修改</a>
+						<a href="javascript:del({{ val[0] }});">删除</a>
+						<a target='_blank' href="{{ val[6] }}/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&fastloginfield=username&username={{ val[12] }}&password={{ val[13] }}&quickforward=yes&handlekey=ls">登陆</a>
+						<a href="javascript:getcookieone({{ val[0] }});">获取COOKIE</a>
+						<a href="javascript:notreg({{ val[0] }});">{{ isreg }}</a>
+					</td>
+				</tr>
+				
+				{% endfor %}
+				<tr>
+					<td colspan="17" class="page" style="text-align: right;">
+						<a>共 {{ page }} 页 {{ count }} 条数据</a>
+						{% for i in range(1,page+1): %}
+							{% if i == p: %}
+								<a style='color:#f00;'>{{ i }}</a>
+							{% else: %}
+								<a href="/?{{ url }}p={{ i }}">{{ i }}</a>
+							{% endif %}
+						{% endfor %}
+					</td>
+				</tr>
+		</table>
+	</center>
+</body>
+<script type="text/javascript">
+	$('td button').on('click',function(){
+		dataid = $(this).attr('data-id')
+		mythis = this
+		$.post('/status',{'parameter':$(this).attr('data-id')},function(res){
+			if(res.res){
+				if(dataid.includes('seal_')){
+					if(res.perform){
+						$(mythis).html('<font color=#f00>是</font>')
+					}else{
+						$(mythis).text('否')
+					}
+
+				}else{
+					if(res.perform){
+						$(mythis).text('是')
+					}else{
+						$(mythis).html('<font color=#f00>否</font>')
+					}
+				}
+			}
+		},'json')
+	})
+	function del(id){
+		if(confirm('你确定要删除吗？')){
+			$.get('/delete',{'id':id},function(res){
+				if(res){
+					$('.delete_'+id).remove()
+				}
+			})
+		}
+	}
+</script>
+<script type="text/javascript">
+	function getcookieone(id){
+
+		$.post('/getcookieone',{'id':id},function(res){
+			if(res == 1){
+					window.location.href='getcookieone://'
+			}else{
+				alert(res)
+			}
+		},'json')
+	}
+</script>
+<script type="text/javascript">
+	$('.tr').hover(function(){
+		// alert(1)
+		$(this).find('td').css('background',"#f00")
+	},function(){
+		$(this).find('td').css('background',"#fff")
+
+	})
+</script>
+<script type="text/javascript">
+		$('.input').on('dblclick',function(){
+		inputobj = $('.input')
+		
+		for(i = 0;i <= inputobj.length;i++){
+			text = $('.input').eq(i).text()
+			if (!text){
+				text = $('.input').eq(i).find('input').val()
+			}
+			$('.input').eq(i).html(text)
+		}
+		input = $(this).text()
+		$(this).html("<input type='text' value='"+input+"' />")
+		$(this).find('input').focus()
+
+
+
+	})
+	$('.input').on('change',function(){
+		input = $(this).find('input').val()
+		id = $(this).attr('id')
+		type = $(this).attr('type')
+		$(this).html(input);
+		$.post('/updateinput',{'type':type,'id':id ,'input':input},function(res){
+		})
+		
+		})
+</script>
+<script type="text/javascript">
+	function notreg(id){
+		$.post('/notreg',{'id':id},function(res){
+			if (res){
+				$('.delete_'+id).remove()
+			}
+		})
+	}
+</script>
+</html>

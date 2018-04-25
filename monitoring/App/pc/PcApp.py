@@ -194,8 +194,8 @@ class PcAPP(object):
 
 			#判断是否有权限查看
 			site = []
-			if userdata['site']:
-				site = userdata['site'].split(',')
+			if userdata['appsite']:
+				site = userdata['appsite'].split(',')
 			if (int(row['permissions']) == 0 or int(row['permissions']) > int(userdata['userlevel']) or int(row['status']) == 0) and str(row['infoid']) not in site:
 				btn2 = tkinter.Button(info, text='一键登录',height=1,fg='#f00',bg="#3BADF3",font=("",14),command=alert)
 			else:

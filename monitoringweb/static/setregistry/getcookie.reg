@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\getcookie]
+@="URL:getcookie Protocol"
+"URL Protocol"="F:\\python\\monitoringweb\\exe\\getcookie.exe"
+ 
+[HKEY_CLASSES_ROOT\getcookie\DefaultIcon]
+@="F:\\python\\monitoringweb\\exe\\getcookie.exe,1"
+ 
+[HKEY_CLASSES_ROOT\getcookie\shell]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\getcookie\shell\open]
+@="open"
+ 
+[HKEY_CLASSES_ROOT\getcookie\shell\open\command]
+@="\"F:\\python\\monitoringweb\\exe\\getcookie.exe\" \"%1\""

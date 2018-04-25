@@ -1,0 +1,22 @@
+create table if not exists `info`(
+`id` int(11) not null auto_increment primary key,
+`perform` tinyint(1) not null default 0 comment '是否执行(1是，0否)',
+`seal` tinyint(1) not null default 0 comment '是否被封号(1是，0否)',
+`cookie` tinyint(1) not null default 0 comment 'cookie是否存在(1是，0否)',
+`type` char(100) not null default '' comment '类型',
+`name` char(200) not null default '' comment '网站名称',
+`url` char(200) not null default '' comment '网址',
+`registered` tinyint(1) not null default 0 comment '注册(1已注册，0未注册)',
+`listen` tinyint(1) not null default 0 comment '收听(1是，0否)',
+`message` tinyint(1) not null default 0 comment '消息(1是，0否)',
+`friends` tinyint(1) not null default 0 comment '好友(1是，0否)',
+`hello` tinyint(1) not null default 0 comment '招呼(1是，0否)',
+`username` char(200) not null default '' comment '用户名',
+`password` char(200) not null default '' comment '密码',
+`email` char(100) not null default '' comment '邮箱',
+`note` varchar(200) not null default '' comment '备注',
+`addtime` int not null default 0 comment '添加时间',
+KEY `name` (`name`),
+KEY `url` (`url`),
+KEY `username` (`username`)
+)engine=innodb default charset=utf8;

@@ -20,6 +20,7 @@ import queue
 import pymysql
 import platform
 import uuid
+import sqlite3
 
 class MonitoringDZ(object):
 	database = {}
@@ -27,6 +28,8 @@ class MonitoringDZ(object):
 	registered_ = {}
 	headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3278.0 Safari/537.36'}
 	path = os.path.dirname(sys.argv[0])+'/'
+
+	
 	def __init__(self):
 		self.local = threading.local() 
 		self.setPath()#设置环境变量
@@ -51,7 +54,6 @@ class MonitoringDZ(object):
 				print('请更新版本')
 				sys.exit()
 		except Exception as e:
-			print(e)
 			print('请更新版本')
 			sys.exit()
 		
@@ -128,8 +130,10 @@ class MonitoringDZ(object):
 					url2 = urllist[0]+'/'+urllist[1]+'/'+urllist[2]
 
 					if url != url2:
-						connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
-						cursor = connect.cursor();#创建一个游标
+						# connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
+						# cursor = connect.cursor();#创建一个游标
+						connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
+						cursor = connect.cursor()
 						print("update info set url = '%s' where id = %s"%(url2,str(id_)))
 						cursor.execute("update info set url = '%s' where id = %s"%(url2,str(id_)))
 						connect.commit();#执行提交
@@ -376,8 +380,10 @@ class MonitoringDZ(object):
 
 	def setstatus(self,url):
 		try:
-			connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
-			cursor = connect.cursor();#创建一个游标
+			# connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
+			# cursor = connect.cursor();#创建一个游标
+			connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
+			cursor = connect.cursor()
 			cursor.execute("update info set seal = 0,registered = 1 where url = '%s'"%url)
 			connect.commit()#执行提交
 			connect.close()
@@ -409,11 +415,13 @@ class MonitoringDZ(object):
 		#检测配置文件
 		self.config();
 		try:
-			connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
-			cursor = connect.cursor();#创建一个游标
+			# connect = pymysql.connect(host=self.database['host'],user=self.database['user'],passwd=self.database['passwd'],db=self.database['db'],charset=self.database['charset'],port=int(self.database['port']))
+			# cursor = connect.cursor();#创建一个游标
+			connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
+			cursor = connect.cursor()
+			print(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
 
 		except Exception as e:
-			print(e)
 			print('数据库连接失败')
 			exit()
 		if not cursor:
@@ -428,7 +436,6 @@ class MonitoringDZ(object):
 			while True:
 				try:
 					sql = "select id,url,username,password,email from info where (perform = 1 and (seal = 1 or registered = 0) and id > "+str(infoid)+") limit 1"
-					print(sql)
 					cursor.execute(sql)
 					data = cursor.fetchall()
 					if data:

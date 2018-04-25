@@ -20,6 +20,8 @@ import queue
 import pymysql
 import platform
 import uuid
+import sqlite3
+
 
 class MonitoringDZ(object):
 	public = {}
@@ -50,7 +52,6 @@ class MonitoringDZ(object):
 				print('请更新版本')
 				sys.exit()
 		except Exception as e:
-			print(e)
 			print('请更新版本')
 			sys.exit()
 		
@@ -88,7 +89,7 @@ class MonitoringDZ(object):
 					if '=' in line and class_ == 'database':
 						conf = line.split('=')
 						database[conf[0].strip()] = conf[1].strip()
-					#公共
+					# 公共
 					if '=' in line and class_ == 'public':
 						conf = line.split('=')
 						self.public[conf[0].strip()] = conf[1].strip()
@@ -103,8 +104,10 @@ class MonitoringDZ(object):
 			exit()
 		
 		try:
-			connect = pymysql.connect(host=database['host'],user=database['user'],passwd=database['passwd'],db=database['db'],charset=database['charset'],port=int(database['port']))
-			cursor = connect.cursor();#创建一个游标
+			# connect = pymysql.connect(host=database['host'],user=database['user'],passwd=database['passwd'],db=database['db'],charset=database['charset'],port=int(database['port']))
+			# cursor = connect.cursor();#创建一个游标
+			connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
+			cursor = connect.cursor()
 			return cursor
 
 		except Exception as e:

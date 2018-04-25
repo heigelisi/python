@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>修改</title>
+  <style type="text/css">
+    .div div{width: 100%;}
+    .div div input[type='text']{width: 60%;}
+    input{margin-top: 5px;}
+    .div span{display: inline-block;width: 25%;text-align: right;}
+  </style>
+</head>
+<body>
+  <div style="width: 70%;margin:0 auto;" class="div">
+    <form method="post" action="/update">
+      {{ data[2] }}
+      <input type="hidden" name="id" value="{{ data[0] }}">
+      <div><span>网站名称：</span><input type="text" value="{{ data[2] }}" name="name"></div>
+      <div><span>网站链接：</span><input type="text" value="{{ data[3] }}" name="url"></div>
+      <div><span>用户名：</span><input type="text" value="{{ data[9] }}" name="username"></div>
+      <div><span>密码：</span><input type="text" value="{{ data[10] }}" name="password"></div>
+      <div><span>邮箱：</span><input type="text" value="{{ data[11] }}" name="email"></div>
+      <div><span>类型：</span><input value="{{ data[1] }}" type="text" name="type"></div>
+      <div><span>执行：</span>
+        是<input {% if data[13]: %}checked{% else: %}{% endif %} type="radio" value="1" name="perform"> 
+        否<input {% if not data[13]: %}checked{% else: %}{% endif %} type="radio" value="0" name="perform"></div>
+      <div><span>注册：</span>
+        是<input {% if data[4]: %}checked{% else: %}{% endif %} type="radio" value="1" name="registered"> 
+        否<input {% if not data[4]: %}checked{% else: %}{% endif %} type="radio" value="0" name="registered"></div>
+      <div><span>收听：</span>
+        是<input {% if data[5]: %}checked{% else: %}{% endif %} type="radio" value="1" name="listen"> 
+        否<input {% if not data[5]: %}checked{% else: %}{% endif %} type="radio" value="0" name="listen"></div>
+      <div><span>消息：</span>
+        是<input {% if data[6]: %}checked{% else: %}{% endif %} type="radio" value="1" name="message"> 
+        否<input {% if not data[6]: %}checked{% else: %}{% endif %} type="radio" value="0" name="message"></div>
+      <div><span>招呼：</span>
+        是<input {% if data[8]: %}checked{% else: %}{% endif %} type="radio" value="1" name="hello"> 
+        否<input {% if not data[8]: %}checked{% else: %}{% endif %} type="radio" value="0" name="hello"></div>
+      <div><span>好友：</span>
+        是<input {% if data[7]: %}checked{% else: %}{% endif %} type="radio" value="1" name="friends"> 
+        否<input {% if not data[7]: %}checked{% else: %}{% endif %} type="radio" value="0" name="friends"></div>
+      <div><span>备注：</span><input type="text" value="{{ data[12] }}" name="note" name="note"></div>
+      <div style="width: 20px;margin: 10px auto;"><input type="submit" value="修改"></div>
+    </form>
+  </div>
+</body>
+</html>

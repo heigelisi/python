@@ -1,0 +1,850 @@
+﻿object { display: none;}
+#mainBody object { display: inline-block;}
+.clear{clear:both; }
+#borderBottom{
+    height: 1px;
+    background: url(../images/insBg02.png) left top no-repeat;
+    margin: 0 auto 14px auto;
+    width: 1025px;
+}
+#headerBanner{
+    background-position: 0 0;
+    width: 763px;
+    height: 251px;
+    margin: 3px 0 0 5px;;
+    background: url(../images/insideAd.jpg) center top no-repeat;
+}
+#headTitle{
+    width: 1024px;
+    height: 152px;
+    margin: 0 auto;
+    clear: both;
+    background: url(../images/gameAreaTitle_bg.png) left top no-repeat;
+}
+#headTitle .left{
+    height: 51px;
+    width: 133px;
+    float: left;
+    _display:inline;
+    margin: 45px 70px 56px 75px;
+}
+#headTitle .right{
+    height: 152px;
+    width: 746px;
+    float: left;
+    background: url(../images/gameAreaTitle_bg_right.png) left top no-repeat;
+}
+#headTitle .right div{
+    height: 152px;
+    width: 728px;
+}
+#headTitle .game3dfight{
+    width: 159px;
+    margin: 45px 55px 56px 64px;
+}
+#headTitle .livebanner,
+#headTitle .livetopbanner,
+#headTitle .multibetbanner,
+#headTitle .robotlivebanner,
+#headTitle .robotmultibetbanner{
+    background: url(../images/gameAreaTitle_bg_rightAD01.jpg) left top no-repeat;
+}
+#headTitle .gamebanner{background: url(../images/gameAreaTitle_bg_rightAD03.jpg) left top no-repeat;}
+#headTitle .lotterybanner,#headTitle .ltlotterybanner{background: url(../images/gameAreaTitle_bg_rightAD04.jpg) left top no-repeat;}
+#headTitle .game3dfightbanner{background: url(../images/gameAreaTitle_game3dfight.jpg) left top no-repeat;}
+#headerContainer {
+    position: relative;
+    margin: 0 auto;
+    width: 1025px;
+    height: auto;
+}
+#headerBottomBg{
+    width: 1024px;
+    margin: 0 auto;
+    height: 727px;
+    position: relative;
+    background: url(../images/containerBg.jpg) center top no-repeat;
+}
+/*主選單*/
+#main-Menual{
+    width: 1024px;
+    height: 30px;
+    margin-top: 10px;
+    _margin-top: 0px;
+    clear: both;
+}
+#main-Menual ul{
+    padding: 0 12px;
+}
+#main-Menual ul li {
+    float: left;
+    height: 30px;
+    width: 84px;
+    padding: 0 4px 0 2px;
+    background: url(../images/nav_right.png) right center no-repeat;
+    color: #FFDEC5;
+}
+#main-Menual ul li.last{background: none;}
+#main-Menual ul li a {
+    display: block;
+    width: 84px;
+    height: 30px;
+    line-height: 30px;
+    text-align:center;
+    color: #CEC4B5;
+    font-weight: bold;
+    text-decoration: none;
+}
+#main-Menual ul li a:hover ,#main-Menual ul li a.current{
+    color: #2E1109;
+    background: url(../images/nav_over.png) center center no-repeat;
+}
+.en #main-Menual ul .LS-live a,
+.en #main-Menual ul .LS-service a{
+    line-height: 12px;
+    height: 27px;
+    width: 70px;
+    padding: 3px 7px 0 ;
+}
+/* 下拉子選單 */
+.ele-lsub-group{
+    position: absolute;
+    z-index: 999;
+    overflow: hidden;
+}
+.ele-lsub-group a,.ele-lsub-group span{
+    float: left;
+    background-image: url(../images/sub.gif);
+}
+.ele-lsub-group a{
+    height: 27px;
+    line-height: 27px;
+    padding: 0 4px;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    font-size: 12px;
+    background-position: 100% -27px;
+}
+.ele-lsub-group a:hover{
+    color: #FF9;
+}
+.ele-lsub-group span{
+    height: 27px;
+    width: 9px;
+}
+.lsub-back-bg{
+    background-position: 100% 27px;
+}
+/*中間區域*/
+#bodyContent{float: left; width: 710px; }
+#bodyContainer{
+    width: 1024px;
+    margin: 0 auto;
+/*     background: url(../images/gameArea_bgX.png) left top repeat-y; */
+}
+.game #bodyContainer{
+    width: 1000px;
+}
+/*登入後選單*/
+#loginAccount{
+    width: 660px;
+    height: 20px;
+    float: right;
+    text-align: right;
+    color: #FEC700;
+    line-height: 20px;
+    padding: 20px 10px 0;
+}
+.ele-accinfo strong{
+    color: #F8E59B;
+}
+.ele-obalance-wrap {
+    line-height: normal;
+}
+#SU-Menual{
+    width: 660px;
+    color: #FFF;
+    height: 20px;
+    line-height: 20px;
+    text-align: right;
+    float: right;
+    padding: 0 10px;
+}
+#SU-Menual a {
+    line-height: 12px;
+    color: #C5988E;
+    padding:0 2px;
+    text-decoration: none;
+}
+#SU-Menual a:hover{color: #C5A75E; }
+/*登入表單*/
+#loginArea{
+    width: 680px;
+    height: 60px;
+    float: left;
+    color: #C5988E;
+}
+#loginArea td{vertical-align: middle;}
+.loginTitle{
+    float: left;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 5px;
+}
+#vPic{padding-left: 5px;cursor: pointer;}
+.en.loginChk .loginTitle{line-height: 12px;}
+.en #vPic{
+    position: absolute;
+    right: 0px;
+    top: 3px;
+}
+.loginInput {
+    width: 125px;
+    height: 26px;
+    line-height: 26px \9;
+    padding:0 0 0 10px;
+    color: #C5988E;
+    background: url(../images/loginBox.jpg) center center no-repeat;
+    border: none;
+    outline: none;
+    float: left;
+}
+.loginInputNum{
+    width: 74px;
+    height: 26px;
+    line-height: 26px \9;
+    padding:0 0 0 10px;
+    color: #C5988E;
+    background: url(../images/loginBox.jpg) center center no-repeat;
+    border: none;
+    outline: none;
+    float: left;
+}
+.login-unit-user{
+    position: relative;
+    display: inline-block;
+    width: 135px;
+    background: url(../images/loginBox.jpg) center center no-repeat;
+}
+#username{
+    width: 74px;
+    background: none;
+}
+.acc-unicode{
+    position: absolute;
+    right: 4px;
+    top: 5px;
+    font-size: 14px;
+    font-family: arial;
+    opacity: 0.7;
+    filter:alpha(opacity=70);
+}
+#est_bg{
+    margin-right: 20px;
+    height:24px;
+    font-size: 12px;
+    color: #FFF;
+    float: left;
+    text-align: right;
+    background-color: transparent;
+    /* For IE 5-7 */
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    /* For IE 8 */
+    -MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    /* Firefox */
+    -moz-opacity:1;
+    /* Moz + FF */
+    opacity: 1;
+    display: inline;
+}
+#logo{
+    float:left;
+    width: 344px;
+    height: 95px;
+}
+#LogoFlash{
+    float: left;
+}
+#loginTable td{padding-left: 10px;}
+#loginContainer{
+    width: 253px;
+}
+.top-custom-link{
+    text-decoration: none;
+    padding-left:5px;
+}
+.top-custom-link:hover{
+    color: #D7C477 !important;
+}
+.top-line {
+    display: inline-block;
+    vertical-align: -3px;
+    width: 1px;
+    height: 14px;
+    background: url(../images/nav_right.png) 0 50% no-repeat;
+}
+/*首頁*/
+#scrollAD{
+    width: 709px;
+    height: 607px;
+    float:left;
+    position: relative;
+    z-index: 9;
+}
+#firstGame {
+    clear: both;
+    width: 265px;
+    height:253px;
+    margin: 0 auto;
+}
+#firstGame a {
+    float: left;
+    width: 115px;
+    height: 115px;
+    margin:0 0 14px 13px;
+    _display:inline;
+    _position:relative;
+    _z-index: 50;
+}
+#game1:hover{ background: url(../images/Games_sports_over.png) no-repeat; }
+#game2:hover{ background: url(../images/Games_live_over.png) no-repeat; }
+#game3:hover{ background: url(../images/Games_casino_over.png) no-repeat; }
+#game4:hover{ background: url(../images/Games_lottery_over.png) no-repeat; }
+#flag{
+    width: 660px;
+    text-align: right;
+    height: 22px;
+    overflow: hidden;
+    line-height: 24px;
+    float: left;
+    padding: 2px 10px 0;
+}
+#flagFloat{float: right;}
+#flag a{
+    display: inline;
+    margin-right: 5px;
+}
+.loginAccount span{color: #FFF; padding-right: 20px; }
+#joinUs:hover{background-position: 0 100%; }
+#firstLeft{
+    width: 315px;
+    height: 493px;
+    float: left;
+    background: url(../images/HomeGameBG.png) left top no-repeat;
+}
+#firstBTN{
+    width: 1024px;
+    height: 157px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    _top: 570px;
+    _bottom: auto;
+}
+#btn2 .news-item{
+    width: 347px;
+    height: 120px;
+    color: #81691F;
+}
+#firstBTN div{float: left;}
+/*遊戲*/
+.gameContainer {
+    margin: 0 auto;
+    width: 993px;
+}
+.gameContent {
+    float: left;
+    position: relative;
+    background: url(../images/game_bg.jpg) left top no-repeat;
+    margin: 15px;
+    _display:inline;
+    width: 300px;
+    height: 130px;
+}
+.gameLink {
+    position: absolute;
+    top: 60px;
+    left: 170px;
+    width: 92px;
+    height: auto;
+}
+.gameLink a {
+    width: 92px;
+    height: 18px;
+    line-height: 18px;
+    text-align: left;
+    text-decoration: none;
+    color: #967C75;
+}
+.gameLink li a:hover {color: #FEF2C3;}
+.gameName{
+    color: #FEF2C3;
+    position: absolute;
+    float: left;
+    font-size: 12px;
+    font-family: 'PMingLiU';
+    font-weight: bold;
+    line-height: 15px;
+    top: 20px;
+    left:170px;
+}
+.gameIMG {
+    position: absolute;
+    top: 15px;
+    left: 8px;
+}
+.gameIMG a {
+    display: block;
+    width: 130px;
+    height: 99px;
+    z-index: 2;
+}
+#liveRoadMap{
+    width: 974px;
+    padding: 5px 10px 0 40px;
+    color:#FFFFFF;
+    text-align: left;
+    float: left;
+}
+#liveRoadMap a{
+    color: #FFF;
+    text-decoration: none;
+}
+#liveRoadMap a:hover{
+    color: #F0E19D;
+    text-decoration: underline;
+}
+/*遊戲new 搶先看*/
+.GameIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    cursor: pointer;
+    background-repeat: no-repeat;
+}
+.GameIcon-First {width: 72px; height: 29px; }
+.GameIcon-New {
+    width: 36px;
+    height: 37px;
+    background-image: url(/cl/tpl/commonFile/images/GameIcon/New.gif);
+}
+/*GameMenual.html 選單*/
+#gameMenual{
+    width:222px;
+    float: left;
+    padding: 15px 20px 50px 35px;
+}
+.sidemenu-header{
+    height: 50px;
+    background: url(../images/sidebar_top.jpg) left top no-repeat;
+}
+#gameMenualList{
+    width:222px;
+    background: url(../images/sidebar.jpg) left top repeat-y;
+}
+#gameMenualList ul{
+    min-height: 324px;
+    background: url(../images/sidebar_bg.jpg) left top no-repeat;
+}
+.sidemenu-footer{
+    height: 91px;
+    background: url(../images/sidebar_bottom.jpg) left top no-repeat;
+}
+#gameMenualList li a,
+#gameMenualList li a:active,
+#gameMenualList li a:visited{
+    display: block;
+    line-height: 36px;
+    height: 36px;
+    color: #E2BD83;
+    width:222px;
+    text-decoration: none;
+    text-align: center;
+}
+#gameMenualList li a:hover{
+    font-weight: bold;
+}
+/*footer*/
+#page-footer{
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 110px;
+    clear: both;
+    background: url(../images/footerBg.jpg) center top no-repeat #461A0F;
+}
+#footerContainer{
+    width: 1024px;
+    height: 85px;
+    padding-top: 25px;
+    margin: 0 auto;
+    position: relative;
+    background: url(../images/footerBg.jpg) center top no-repeat #461A0F;
+}
+#footerArticle {
+    margin: 5px 0;
+    _display:inline;
+    color: #8A6A5F;
+    width: 450px;
+    float: right;
+    line-height: 20px;
+    padding-left: 10px;
+    height: 20px;
+    text-align: right;
+}
+#footerArticle a {
+    color: #8A6A5F;
+    text-decoration: none;
+    padding: 0 10px;
+}
+#footerArticle img{position: relative;top: 1px;}
+#footerArticle a:hover {color: #ECBF40; }
+#footerInfomation {
+    float: left;
+    width: 450px;
+    text-align: right;
+    color: #A77B6F;
+    line-height: 16px;
+    margin-top: 10px;
+    padding-right: 10px;
+}
+#bbin_logo,#bbin_logo a {float: left; }
+#bbin_logo img{float: left;margin: 0 1px;}
+#browser-logo{ margin-top: 9px; }
+
+/* ELE Style */
+/*
+** 各站 遊戲彩金 Game Jackpot
+*/
+.ele-gamejp-wrap {
+    width: 1000px;
+    height: 74px;
+}
+.ele-gamejp-title {
+    width: 190px;
+}
+.ele-gamejp-title,
+.ele-gamejp-bb-area,
+.ele-gamejp-g3d-area {
+    float: left;
+    height: 74px;
+}
+.ele-gamejp-bb-area,
+.ele-gamejp-g3d-area{
+    width: 215px;
+    margin-left: 20px;
+    padding: 0 10px 0 160px;
+}
+.ele-gamejp-explain {
+    width: 174px;
+    height: 28px;
+    line-height: 28px;
+    color: #C5988E;
+    background-image: url('../images/gamejp_btn.png');
+    transition: all 0.2s ease;
+}
+.ele-gamejp-prize {
+    padding-top: 6px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 25px;
+    color: #FF0;
+}
+/* 小彩金  */
+.ele-layout-subjp .ele-game-layout{
+    height: 246px;
+}
+.ele-layout-subjp .ele-game-ctl-wrap{
+    bottom: 46px;
+}
+.ele-layout-subjp .ele-game-sub-jp .minorJP{
+    margin-top: 10px;
+    padding: 0 10px 0 10px;
+    color: #FFF;
+    background: #661C00;
+    box-shadow: 0 3px 1px rgba(0,0,0,0.5);
+}
+.ele-layout-subjp .ele-game-sub-jp .minorJP:before{
+    color: #DDD;
+}
+/*
+** 各站 遊戲導覽列 Game Menu
+*/
+.game-menu {
+    margin: 0 auto;
+    width: 1000px;
+    background: url('../images/game_menu.png') no-repeat;
+}
+.game .game-menu-title {
+    display: none;
+}
+.game-menu-bg,
+.nav-normal > a {
+    height: 48px;
+}
+.nav-normal {
+    background: url('../images/game_menu_line.png') right center no-repeat;
+}
+.nav-normal > a {
+    padding: 0 20px;
+    line-height: 48px;
+    text-decoration: none;
+}
+.nav-icon {
+    display: inline-block;
+    vertical-align: text-top;
+    width: 18px;
+    height: 18px;
+    transition: all 0.2s ease;
+}
+/*
+** 各站 遊戲搜尋
+*/
+#ele-search-wrap {
+    width: 222px;
+    height: 48px;
+}
+/* for ie8*/
+#ele-search-wrap label {
+    top: 16px;
+    left: 8px;
+}
+#ele-search-wrap .ele-search-input {
+    float: left;
+    margin: 5px 5px 9px 5px;
+    height: 34px;
+    line-height: 34px \9;
+}
+#ele-search-wrap label,
+#ele-search-wrap .ele-search-input {
+    width: 152px;
+}
+#ele-search-wrap .ele-search-btn {
+    width: 60px;
+}
+/*
+** 各站遊戲圖 樣式
+*/
+.game .ele-game-wrap {
+    margin: 20px auto;
+    width: 984px;
+}
+.ele-game-layout {
+    margin: 8px 4px;
+    width: 320px;
+    background: url('../images/game_bg.png') no-repeat left top;
+}
+.ele-game-name h3 {
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    color: #FEF2C3;
+}
+.ele-game-ctl-wrap,
+.ele-game-ctl-tools,
+.ele-game-ctl-links {
+    width: 100%;
+}
+.ele-game-img,
+.ele-game-ctl-wrap {
+    bottom: 0;
+}
+.ele-game-ctl-tools {
+    height: 30px;
+    background-color: #661C00;
+}
+/*
+** 各站 遊戲連結
+*/
+.ele-game-link {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+}
+.ele-game-ctl-links a{
+    color: #B37455;
+    background-color: #7A2213;
+    background-color: rgba(122,34,19,0.9);
+}
+.ele-game-ctl-links a:hover{
+    color: #900;
+    background-color: #E7DAC2;
+    background-color: rgba(231,218,194,0.9);
+}
+.ele-game-ctl-links a.ctl-btn-enter{
+    color: #600;
+    background-color: #CEA500;
+    background-color: rgba(206,165,0,0.9);
+}
+.ele-game-ctl-links a.ctl-btn-enter:hover{
+    color: #900;
+    background-color: #FFD52D;
+    background-color: rgba(255,213,45,0.9);
+}
+
+/*文案*/
+#joinMember{padding: 5px;}
+#direction {
+    width: 680px;
+    float: left;
+    color: #FFF;
+    text-align: left;
+    padding: 10px 10px 10px 20px;
+    background: none;
+}
+#direction #articles{float: left;}
+#direction a {color:#FC0; text-decoration: none; }
+#direction a:hover{color: #DFC353;}
+#direction ul.mtab-menual {
+    background: url(../images/Menu.jpg) repeat-x;
+    margin: 5px 0px;
+    width: 628px;
+    height: 29px;
+}
+#direction ul.mtab-menual li {
+    float:left;
+    font-size: 13px;
+    margin: 0 8px;
+    padding: 0px 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #FFF;
+    color: #FFF;
+}
+#direction ul.mtab-menual li.mtab {color: #FFF600; border-bottom: 1px solid #FFF600; }
+#MemberExclusive{
+    display:none;
+}
+/* 彩金說明 */
+a.jpbtn-zh-tw,
+a.jpbtn-zh-cn,
+a.jpbtn-en,
+a.jpbtn-th,
+a.jpbtn-ja,
+a.jpbtn-es,
+a.jpbtn-vi,
+a.jpbtn-ko,
+a.jpbtn-km,
+a.jpbtn-lo,
+a.jpbtn{
+    margin:0px auto;
+    display:block;
+    width:166px;
+    height:31px;
+    background: url(/cl/tpl/commonFile/images/PrizeRule_en.jpg) left top no-repeat;
+}
+a.jpbtn-zh-tw{background: url(/cl/tpl/commonFile/images/PrizeRule_tw.jpg) left top no-repeat; }
+a.jpbtn-zh-cn{background: url(/cl/tpl/commonFile/images/PrizeRule_cn.jpg) left top no-repeat; }
+
+a.jpbtn-zh-tw,
+a.jpbtn-zh-cn,
+a.jpbtn-en,
+a.jpbtn-th,
+a.jpbtn-ja,
+a.jpbtn-es,
+a.jpbtn-vi,
+a.jpbtn-ko,
+a.jpbtn-km,
+a.jpbtn-lo,
+a.jpbtn:hover{
+    background-positon:bottom;
+}
+a.gameJackpot{
+    width: 170px;
+    height: 30px;
+    font-weight: bold;
+    color: #A1B2C6;
+    text-align: center;
+    line-height: 30px;
+    float: left;
+    text-decoration: none;
+}
+a.gameJackpot:hover{color:#FFF;}
+a.prizeBB-zh-tw,
+a.prizeBB-zh-cn,
+a.prizeBB-en,
+a.prizeBB-th,
+a.prizeBB-ja,
+a.prizeBB-es,
+a.prizeBB-vi,
+a.prizeBB-ko,
+a.prizeBB-km,
+a.prizeBB-lo,
+a.prizeBB{
+    margin:0px auto;
+    display:block;
+    width:166px;
+    height:31px;
+    background: url(/cl/tpl/commonFile/images/PrizeBB_en.jpg) left top no-repeat;
+}
+a.prizeBB-zh-tw{background: url(/cl/tpl/commonFile/images/PrizeBB_tw.jpg) left top no-repeat; }
+a.prizeBB-zh-cn{background: url(/cl/tpl/commonFile/images/PrizeBB_cn.jpg) left top no-repeat; }
+#prizeDIV{
+    padding: 27px 5px 0px 6px;
+    width: 170px;
+    height: 64px;
+    margin-left: 40px;
+    background:url(/cl/tpl/commonFile/images/prizeBG.jpg) 0 0 no-repeat;
+}
+#prizePos {padding: 42px 0px 22px 0; }
+#prizeGuide{
+    width:166px;
+    padding-bottom: 10px;
+    margin-left: 50px;
+}
+/*共用頁面*/
+.Tpl-table01 {
+    background-color: #FFFFFF;
+    border: 1px solid #666;
+    color: #000;
+    font-size: 12px;
+}
+table .Tpl-title01 th{
+    background-color: #941616;
+    height: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: #FFFFFF;
+    /* IE10 */
+    background: -ms-linear-gradient(top, #E26740 0%,#941616 100%);
+    /* Mozilla Firefox */
+    background: -moz-linear-gradient(top, #E26740 0%,#941616 100%);
+    /* Opera */
+    background: -o-linear-gradient(top, #E26740 0%,#941616 100%);
+    /* Webkit (Chrome 11+) */
+    background: -webkit-linear-gradient(top, #E26740 0%,#941616 100%);
+    /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E26740', endColorstr='#941616',GradientType=0 );
+    /* Proposed W3C Markup */
+    background: linear-gradient(top, #E26740 0%,#941616 100%);
+}
+#Tpl-user-acc span{line-height:20px; color: #0000FF; }
+.Tpl-table01 th, .Tpl-table01 td {height: 22px; border: 1px solid #666; }
+tr.Tpl-trcolor1{
+    background: #FFFFFF;
+    /* IE10 */
+    background: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    /* Mozilla Firefox */
+    background: -moz-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    /* Opera */
+    background: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    /* Webkit (Chrome 11+) */
+    background: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    /* Proposed W3C Markup */
+    background: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+}
+tr.Tpl-trcolor2{background: #EEEEEE; }
+tr.Tpl-trmouseenter {background: #DEF; }
+#Tpl-memdata .Tpl-table01 th, #Tpl-memdata .Tpl-table01 td.Tpl-left{text-align: center; }
+#Tpl-memdata .Tpl-table01 td.Tpl-right{text-align: left; }
+.Tpl-blue {color: #0000FF; }
+.Tpl-fontcolor1 {color: #D73600; }
+.Tpl-fontcolor2 {color: #0000FF; }
+a {
+    outline: none;                                  /* for Firefox Google Chrome  */
+    behavior:expression(this.onFocus=this.blur());  /* for IE */
+}
