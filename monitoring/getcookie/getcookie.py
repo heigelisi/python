@@ -117,7 +117,7 @@ class MonitoringDZ(object):
 
 
 
-	def login(self,url,username,password,loginnum=1):
+	def login(self,url,username,password,id_,loginnum=1):
 		'''登录'''
 		try:
 			print('正在登录 ',url)
@@ -129,8 +129,29 @@ class MonitoringDZ(object):
 				browser.get(url+'/member.php?mod=logging&action=login')#访问登录页面
 			except Exception as e:
 				self.showlog(browser,url+"\t失败，无法登陆此网站\r")
-			
+
+			try:
+				urllist = browser.current_url.split('/')
+				url2 = urllist[0]+'/'+urllist[1]+'/'+urllist[2]
+				if url2 != url:
+					connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
+					cursor = connect.cursor()
+					sql = "update info set url = '%s' where id = %s"%(url2,str(id_))
+					cursor.execute(sql)
+					connect.commit()
+					connect.close()
+					url = url2
+			except Exception as e:
+				pass
+
 			while True:
+				try:
+					geturl_ = browser.current_url
+				except Exception as e:
+					print(url,'\t手动关闭了浏览器')
+					myqueue.get()
+					browser.quit()
+					sys.exit()
 
 				try:
 					inputusername = browser.find_element(By.CSS_SELECTOR,'input[name=username]') 
@@ -242,20 +263,20 @@ class MonitoringDZ(object):
 			infoid = 0
 			while True:
 				try:
-					sql = "select id,url,username,password from info where perform = 1 and registered = 1 and id > "+str(infoid)+" limit 1"
+					sql = "select id,url,username,password from info where perform = 1 and registered = 1 and cookie = 0 and id > "+str(infoid)+" limit 1"
 					cursor.execute(sql)
 					data = cursor.fetchall()
 					if data:
 						data0 = data[0]
 						infoid = data0[0]
 						#检测cookie
-						cookiefile = self.path+'cookies/'+data0[1].replace('http://','').replace('https://','')+'.json'
-						if os.path.exists(cookiefile):
-							continue
+						# cookiefile = self.path+'cookies/'+data0[1].replace('http://','').replace('https://','')+'.json'
+						# if os.path.exists(cookiefile):
+						# 	continue
 
 						print('正在启动 ',data0[1],' 站点...')
 						myqueue.put(data0[0])
-						w = threading.Thread(target=self.login,args=(str(data0[1]),data0[2],data0[3],))
+						w = threading.Thread(target=self.login,args=(str(data0[1]),data0[2],data0[3],infoid,))
 						w.start()
 						joinlist.append(w)
 					else:

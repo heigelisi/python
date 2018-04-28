@@ -155,7 +155,7 @@ class MonitoringDZ(object):
 		try:
 			# self.headers['Referer':'http://caob3.xyz/home.php?mod=spacecp&ac=pm&op=showmsg&handlekey=showmsg_77667&touid=77667&pmid=0&daterange=2']
 			self.showMsg(self.local.url+'\t正在给 UID 为 '+str(uid)+' 的用户发消息\r')
-			data = {'pmsubmit':True,'touid':uid,'formhash':self.local.formhash,'message':self.monitoring_['msg'],'messageappend':None}
+			data = {'pmsubmit':True,'touid':uid,'formhash':self.local.formhash,'message':self.local.message,'messageappend':None}
 			posturl = self.local.url+'/home.php?mod=spacecp&ac=pm&op=send&touid='+str(uid)
 			posthtml = self.local.conn.post(posturl,headers=self.headers,data=data)
 			posthtml.encodeing = self.local.encodeing
@@ -181,7 +181,7 @@ class MonitoringDZ(object):
 		"""添加好友"""
 		try:
 			self.showMsg(self.local.url+'\t正在添加 UID 为 '+str(uid)+' 的用户为好友\r')
-			data = {'referer':self.local.url+"/./",'addsubmit':True,'formhash':self.local.formhash,'note':self.monitoring_['msg'],'gid':1,'addsubmit_btn':True}
+			data = {'referer':self.local.url+"/./",'addsubmit':True,'formhash':self.local.formhash,'note':self.local.message,'gid':1,'addsubmit_btn':True}
 			posturl = self.local.url+"/home.php?mod=spacecp&ac=friend&op=add&uid="+str(uid)
 			posthtml = self.local.conn.post(posturl,headers=self.headers,data=data)
 			posthtml.encodeing = self.local.encodeing
@@ -214,7 +214,7 @@ class MonitoringDZ(object):
 			self.showMsg(self.local.url+'\t正在跟 UID 为 '+str(uid)+' 的用户打招呼\r')
 			posturl = self.local.url+"/home.php?mod=spacecp&ac=poke&op=send&uid="+str(uid)
 			# home.php?mod=spacecp&amp;ac=poke&amp;op=send&amp;uid=16952
-			data = {'pokesubmit':True,'referer':self.local.url+'/./','formhash':self.local.formhash,'iconid':3,'note':self.monitoring_['msg'],'pokesubmit_btn':True}
+			data = {'pokesubmit':True,'referer':self.local.url+'/./','formhash':self.local.formhash,'iconid':3,'note':self.local.message,'pokesubmit_btn':True}
 			posthtml = self.local.conn.post(posturl,headers=self.headers,data=data)
 			posthtml.encodeing = self.local.encodeing
 			msghtml = pyquery.PyQuery(posthtml.text.encode().decode('utf8'))
@@ -504,6 +504,13 @@ class MonitoringDZ(object):
 
 				# getlogin.encodeing = encodeing
 				self.local.encodeing = encodeing
+				try:
+					if encodeing is 'utf8':
+						self.local.message = self.monitoring_['msg']
+					else:
+						self.local.message = self.monitoring_['msg'].encode('utf8').decode('utf-8').encode('gbk')
+				except Exception as e:
+					self.local.message = self.monitoring_['msg']
 
 				try:
 					# q = pyquery.PyQuery(getlogin.text.encode().decode('utf8'))

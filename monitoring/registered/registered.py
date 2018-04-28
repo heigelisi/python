@@ -134,7 +134,7 @@ class MonitoringDZ(object):
 						# cursor = connect.cursor();#创建一个游标
 						connect = sqlite3.connect(os.path.dirname(os.path.dirname(self.path))+'/monitoring.db')
 						cursor = connect.cursor()
-						print("update info set url = '%s' where id = %s"%(url2,str(id_)))
+						# print("update info set url = '%s' where id = %s"%(url2,str(id_)))
 						cursor.execute("update info set url = '%s' where id = %s"%(url2,str(id_)))
 						connect.commit();#执行提交
 						connect.close()
