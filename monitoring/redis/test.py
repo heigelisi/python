@@ -4,6 +4,7 @@ import requests
 import pyquery
 import base64
 import re
+import time
 
 # print(base64.b64decode('aHR0cDovL3d3dy5keGo4Lm1lL3NwYWNlLXVpZC0xMDAuaHRtbA=='))
 
@@ -20,12 +21,13 @@ conn = redis.Redis(connection_pool=pool)
 # conn.sadd('test','192.168.1.99','111111111111','222222222222222222','222222222222222222',li)
 # print(conn.smembers('test'))
 
-# print(conn.smembers('Waiting'))
-html = "https://www.sobt5.org', b'http://www.btc98.com', b'http://www.11cdd.com', "
-pattern = re.compile(r'.*?(https?:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+\.[A-Za-z0-9]+).*?',re.S)
-urls = list(set(re.findall(pattern,html)))
+print(conn.smembers('Waiting'))
+time.sleep(100)
+# html = "https://www.sobt5.org', b'http://www.btc98.com', b'http://www.11cdd.com', "
+# pattern = re.compile(r'.*?(https?:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+\.[A-Za-z0-9]+).*?',re.S)
+# urls = list(set(re.findall(pattern,html)))
 
-print(urls)
+# print(urls)
 
 # print(conn.smembers("dzlist"))
 

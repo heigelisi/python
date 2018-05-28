@@ -9,6 +9,12 @@ sublimeREPL插件
 1.sublimeREPL->python
 2.sublimeREPL->shell
 
+自动提示/补全python代码
+1.从菜单 View - Show Console 或者 ctrl + ~ 快捷键，调出 console。将以下 Python 代码粘贴进去并 enter 执行，不出意外即完成安装。以下提供 ST3 和 ST2 的安装代码：
+import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+
+2.ctrl+shift+p调用出窗口：输入Install Package,反应过来以后输入 SublimeCodeIntel
+
 
 test = 100;
 test = 'sssss';

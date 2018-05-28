@@ -126,6 +126,9 @@ browser = webdriver.Chrome()
 url = "http://www.runoob.com/try/try.php?filename-jqueryui-api-droppable"
 browser.get(url)
 browser.switch_to.frame('iframeResult')#切换到一个iframe页面
+switch_to.default_content() #从frame中切回主文档
+# 嵌套frame的操作(switch_to.parent_frame())
+
 source = browser.find_element_by_css_selector('#draggable')
 target = browser.find_element_by_css_selector('#draggable')
 actions = ActionChains(browser)
