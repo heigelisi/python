@@ -1,81 +1,132 @@
 import imaplib
-
+import email
+import chardet
 
 email_='869688800@qq.com'
 password='choqdwkaphjobcih'
+def getEmail(username,password):
 
-# #链接邮箱服务器
-conn = imaplib.IMAP4_SSL("imap.qq.com")
-#登录
-conn.login(email_,password)
-#收邮件
-INBOX = conn.select("INBOX")
-#全部邮件
-types, data = conn.search(None, 'ALL')
-#邮件列表
-msgList = data[0].split()
-#最后一封
-last = msgList[len(msgList) - 2]
-# print(last)
-#取最后一封
-types, datas = conn.fetch(last, '(RFC822)')
-#把取回来的邮件写入txt文档
-# print(type(datas[0][1].decode()))
-# print(datas[0][1].decode())
-import email
-mail = email.message_from_string((datas[0][1].decode()))
-# print(email.header.decode_header(mail['subject']).decode() )
-# print(mail['subject'])
-print(email.header.decode_header(mail['subject'])[0][0].decode())
+  #链接邮箱服务器
+  conn = imaplib.IMAP4_SSL("imap.qq.com")
+  #登录
+  conn.login(email_,password)
+  #收邮件
+  INBOX = conn.select("INBOX")
+  #全部邮件
+  types, data = conn.search(None, 'UNSEEN')#UNSEEN 未读邮件 ALL全部邮件
+  #邮件列表
+  msgList = data[0].split()
+  
+
+  #读取邮件
+  for r in msgList:
+    try:
+      subject=sender=date=to=body = ''
+      types, datas = conn.fetch(r, '(RFC822)')
+      #获取编码类型
+      # fencoding=chardet.detect(datas[0][1])
+      # if fencoding['encoding'] == 'ascii' or fencoding['encoding'] == 'utf-8':
+      #   encoding = 'utf8'
+      # else:
+      encoding = None
+      subject = None
+      try:
+        mail = email.message_from_string((datas[0][1].decode()))
+        subject = email.header.decode_header(mail['subject'])[0][0].decode()#标题
+        #主体内容
+        for part in mail.walk():
+          # 如果ture的话内容是没用的
+          if not part.is_multipart():       
+              # mycode=part.get_content_charset();
+              body = part.get_payload(decode=True).decode('utf-8')
+
+      except Exception as e:
+        pass
+      if not subject:
+        try:
+          mail = email.message_from_string((datas[0][1].decode('gb18030')))
+          subject = email.header.decode_header(mail['subject'])[0][0].decode('gb18030')#标题
+          #主体内容
+          for part in mail.walk():
+            # 如果ture的话内容是没用的
+            if not part.is_multipart():       
+                # mycode=part.get_content_charset();
+                body = part.get_payload(decode=True).decode('utf-8')
+
+        except Exception as e:
+          pass
+      if not subject:
+        try:
+          mail = email.message_from_string((datas[0][1].decode('gbk')))
+          subject = email.header.decode_header(mail['subject'])[0][0].decode('gbk')#标题
+          #主体内容
+          for part in mail.walk():
+            # 如果ture的话内容是没用的
+            if not part.is_multipart():       
+                # mycode=part.get_content_charset();
+                body = part.get_payload(decode=True).decode('utf-8')
+
+        except Exception as e:
+          pass
+      print(subject)
+      if body:
+        sender = mail['X-QQ-ORGSender']#发件人
+        date = mail['Date']#发件时间
+        # print(email.header.decode_header(mail['From'])[0][0].decode())#标题
+        to = mail['To']#收件人
+            
+    except Exception as e:
+      pass
+
+getEmail(email_,password)
 
 
-for row in mail.keys():
-  try:
-    print(email.header.decode_header(mail[row])[0][0].decode()) 
-  except Exception as e:
-    pass
-# print(mail[row])
-# print(row)
 
-
+# for row in mail.keys():
+#   print(row)
+#   try:
+#     print(email.header.decode_header(mail[row])[0][0]) 
+#   except Exception as e:
+#     print(e)
+#     pass
 
 # print(datas[0][1].decode().split("\r\n"))
 # print(mail.keys() ,mail.items())
 
-def showmessage(mail):
+# def showmessage(mail):
 
 
-  if mail.is_multipart():
+#   if mail.is_multipart():
 
 
-    for part in mail.get_payload():
+#     for part in mail.get_payload():
 
 
-      showmessage(part)
+#       showmessage(part)
 
 
-  else:
+#   else:
 
 
-    type=mail.get_content_charset()
+#     type=mail.get_content_charset()
 
 
-    if type==None:
+#     if type==None:
 
 
-      print (mail.get_payload())
+#       print (mail.get_payload())
 
 
-    else:
+#     else:
 
 
-      try:
+#       try:
 
 
-        print(mail.get_payload('base64'))
+#         print(mail.get_payload('base64'))
 
 
-      except UnicodeDecodeError:
+#       except UnicodeDecodeError:
 
 
-         print (mail)
+#          print (mail)
