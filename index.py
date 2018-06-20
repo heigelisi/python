@@ -453,3 +453,7 @@ print(name)
 #只有在调用时才会生成
 # 用for循环调取或者用c.__next__()(下一个)
 c = (i * 2 for i in range(10))
+
+
+import base64
+encode = base64.b64encode(b'I love you')  
