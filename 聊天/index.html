@@ -17,14 +17,21 @@
                ws.onopen = function()
                {
                   // Web Socket 已连接上，使用 send() 方法发送数据
-                  obj = {'name':'周飞'}
-                            String.prototype.ToUnicode = function (str) {
-                     return escape(str).replace(/%u/gi, '\\u');//如果不替换,输出格式为:%uxxxx%uxxxx
-                 }
-                 msg = String.prototype.ToUnicode("我爱你");
+                 //  obj = {'name':'周飞'}
+                 //            String.prototype.ToUnicode = function (str) {
+                 //     return escape(str).replace(/%u/gi, '\\u');//如果不替换,输出格式为:%uxxxx%uxxxx
+                 // }
+                 // msg = String.prototype.ToUnicode("123");
                   
-                  ws.send('我很好');
-                  console.log("数据发送中...");
+                     // setInterval(function(){
+                        ws.send('a');
+                        console.log("数据发送中...");
+                        
+                     // },1000)
+
+                  // }
+
+
                };
                 
                ws.onmessage = function (evt) 

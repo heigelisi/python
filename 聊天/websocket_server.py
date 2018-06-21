@@ -83,9 +83,28 @@ class ChatRoom(object):
 			# 		self.sendMsg(json.dumps(data))
 			# time.sleep(1)
 			print('接受数据')
-			data = conn.recv(1024)#接受数据
+			info = conn.recv(1024)#接受数据
+			print(info)
+			print(info[1])
+			code_len = info[1] & 127
+			if code_len == 126:
+			    masks = info[4:8]
+			    data = info[8:]
+			elif code_len == 127:
+			    masks = info[10:14]
+			    data = info[14:]
+			else:
+			    masks = info[2:6]
+			    data = info[6:]
 			print(data)
-			print(type(data))
+			i = 0
+			raw_str = ""
+			for d in data:
+			    # print(masks, masks[i % 4])
+			    print(d)
+			#     raw_str += chr(d ^ ord(masks[i % 4]))
+			#     i += 1
+			# print(raw_str)
 			# print(msg.decode())
 			data = {'code':200,'msg':'123'}
 			self.sendMsg(json.dumps(data))
@@ -101,7 +120,7 @@ class ChatRoom(object):
 		
 		while True:
 			conn,addr = self.sock.accept()
-			data = conn.recv(1024)#接受数据
+			data = conn.recv(2048)#接受数据
 			print(data)
 			data = data.decode()
 			print('ddddddddddddddddddd',data,'ddddddddddddddddddddddddddd')
