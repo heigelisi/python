@@ -1,13 +1,13 @@
 import imaplib
 import email
-import chardet
+# import chardet
 
 email_='869688800@qq.com'
 password='choqdwkaphjobcih'
 def getEmail(username,password):
 
   #链接邮箱服务器
-  conn = imaplib.IMAP4_SSL("imap.qq.com")
+  conn = imaplib.IMAP4_SSL(r"imap.qq.com")
   #登录
   conn.login(email_,password)
   #收邮件
