@@ -74,7 +74,6 @@ class ChatRoom(object):
 					val.close()
 
 	def recvMsg(self,conn,addr):
-
 		ii = 0
 		while True:
 
@@ -101,7 +100,7 @@ class ChatRoom(object):
 				   masks=msg[2:6]
 				   data=msg[6:]
 
-				print('masks',masks,'data',data)
+				print('masks',masks,'data',data,ii)
 				raw_str=""
 				i=0
 
@@ -125,12 +124,14 @@ class ChatRoom(object):
 					message = {'code':200,'msg':raw_str.replace('%','\\').encode('utf8').decode('unicode_escape')}
 				except Exception as e:
 					pass
-			username = addr
+					
 			if ii == 0:
-				username = message
+				username = addr[0]+':'+str(addr[1])
+				username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
 			else:
 				message['username'] = username
 				self.sendMsg(json.dumps(message))
+			print('username',username)
 			ii += 1
 
 		
