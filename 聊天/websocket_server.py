@@ -73,42 +73,65 @@ class ChatRoom(object):
 					pass
 					val.close()
 
-	def recvMsg(self,conn):
+	def recvMsg(self,conn,addr):
 
+		ii = 0
 		while True:
-			# if self.clients:
-			# 	for key,val in self.clients.items():
-			# 		msg = val.recv(1024).decode()#接受数据
-			# 		data = {'code':200,'msg':msg}
-			# 		self.sendMsg(json.dumps(data))
-			# time.sleep(1)
-			print('接受数据')
-			info = conn.recv(1024)#接受数据
-			print(info)
-			print(info[1])
-			code_len = info[1] & 127
-			if code_len == 126:
-			    masks = info[4:8]
-			    data = info[8:]
-			elif code_len == 127:
-			    masks = info[10:14]
-			    data = info[14:]
-			else:
-			    masks = info[2:6]
-			    data = info[6:]
-			print(data)
-			i = 0
-			raw_str = ""
-			for d in data:
-			    # print(masks, masks[i % 4])
-			    print(d)
-			#     raw_str += chr(d ^ ord(masks[i % 4]))
-			#     i += 1
-			# print(raw_str)
-			# print(msg.decode())
-			data = {'code':200,'msg':'123'}
-			self.sendMsg(json.dumps(data))
 
+			try:
+				msg = conn.recv(1024)
+				if not msg:
+					return False
+				print(msg[1])
+
+				code_len =  msg[1] & 127
+
+				if code_len == 126:
+
+				   masks=msg[4:8]
+
+				   data=msg[8:]
+
+				elif code_len == 127:
+
+				   masks=msg[10:14]
+				   data=msg[14:]
+
+				else:
+				   masks=msg[2:6]
+				   data=msg[6:]
+
+				print('masks',masks,'data',data)
+				raw_str=""
+				i=0
+
+				for d in data:
+					raw_str += chr(d ^ masks[i%4])
+					i+=1
+
+				print(raw_str)
+			except Exception as e:
+				print(e)
+
+
+			message = None
+			try:
+				message = {'code':200,'msg':raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')}
+			except Exception as e:
+				pass
+
+			if not message:
+				try:
+					message = {'code':200,'msg':raw_str.replace('%','\\').encode('utf8').decode('unicode_escape')}
+				except Exception as e:
+					pass
+			username = addr
+			if ii == 0:
+				username = message
+			else:
+				message['username'] = username
+				self.sendMsg(json.dumps(message))
+			ii += 1
 
 		
 
@@ -126,7 +149,7 @@ class ChatRoom(object):
 			print('ddddddddddddddddddd',data,'ddddddddddddddddddddddddddd')
 			if self.shakeHands(conn,data):
 				self.clients[addr[0]+':'+str(addr[1])] = conn
-				w = threading.Thread(target=self.recvMsg,args=(conn,))
+				w = threading.Thread(target=self.recvMsg,args=(conn,addr,))
 				w.start()
 
 			else:

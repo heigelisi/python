@@ -17,14 +17,14 @@
                ws.onopen = function()
                {
                   // Web Socket 已连接上，使用 send() 方法发送数据
-                 //  obj = {'name':'周飞'}
+                  obj = {name:"周菲"}
                  //            String.prototype.ToUnicode = function (str) {
                  //     return escape(str).replace(/%u/gi, '\\u');//如果不替换,输出格式为:%uxxxx%uxxxx
                  // }
                  // msg = String.prototype.ToUnicode("123");
                   
                      // setInterval(function(){
-                        ws.send('a');
+                        ws.send(escape('周'));
                         console.log("数据发送中...");
                         
                      // },1000)

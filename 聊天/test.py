@@ -1,4 +1,14 @@
 
+# print(ord('129'))
+
+strs = "\\u5468fffff"
+print(strs.encode('gbk').decode('unicode_escape'))
+
+
+exit()
+
+
+
 
 
 # import base64
