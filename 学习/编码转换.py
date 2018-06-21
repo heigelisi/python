@@ -1,8 +1,9 @@
-https://www.cnblogs.com/ccnaie/p/6832430.html
-msg.encode('utf8').decode('utf-8').encode('gbk')#requests 发送gbk网站消息时
+# https://www.cnblogs.com/ccnaie/p/6832430.html
+# msg.encode('utf8').decode('utf-8').encode('gbk')#requests 发送gbk网站消息时
 
-python3中各个字符编码的转换
+# python3中各个字符编码的转换
 a='我很好'    ####python3 默认的编码为unicode
+print(a)
 ###unicode>gb2312
 unicode_gb2312=a.encode('gb2312') ###因为默认是unicode所以不需要decode()，直接encode成想要转换的编码如gb2312
 print('我的gb2312',unicode_gb2312)       ###返回结果: 我的gb2312 b'\xce\xd2\xba\xdc\xba\xc3'
