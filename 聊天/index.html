@@ -70,6 +70,7 @@ function send(){
   txt.val('');
   txt.focus();  
   try{
+      alert(escape(msg))
         socket.send(escape(msg));
       $('.sayInfo').html(msg)
 //        log("我说："+msg);
@@ -77,10 +78,11 @@ function send(){
       log(ex);
   }
 }  
-   
+
+//刷新或关闭浏览器时 关闭socke
 window.onbeforeunload=function(){  
     try{  
-        socket.send('quit');  
+        socket.send(escape('quit'));  
         socket.close();  
         socket=null;  
     }  

@@ -1,11 +1,28 @@
+import json
 
-# print(ord('129'))
 
-strs = "\\u5468fffff"
-print(strs.encode('gbk').decode('unicode_escape'))
+stss =  b'\xe6\xb0\x93\xe8\x81\xad\xe7\xaf\x93\xe8\x8c\x85\xe6\x8b\xa2\xe8\x81\xbb'
+for i in stss:
+	print(i)
+
 
 
 exit()
+# print(ord('中'))
+# # print(chr('0x30'))
+# print('('.encode())
+# print(ascii('aa'))
+
+# msg = b"\x05B微信\x05D".decode()
+# print(msg)
+# exit()
+# # print(chr(msg))
+# message = {'code':200,'msg':msg}
+# m = json.dumps(message)
+# print(m)
+# s = json.loads(m)
+# print(s)
+# exit()
 
 
 

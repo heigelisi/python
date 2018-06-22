@@ -44,6 +44,7 @@ class ChatRoom(object):
 			return True
 		except Exception as e:
 			return False
+
 	def sendMsg(self,message):
 		if self.clients:
 			for key,val in self.clients.items():
@@ -63,14 +64,16 @@ class ChatRoom(object):
 				    print("the message is too long to send in a time")
 				    return
 				message_byte = bytes()
-				print(key)
+
 				for c in backMsgList:
 				    message_byte += c
 				message_byte += bytes(message, encoding="utf8")
 				try:
+					print('ssssssssssssss',key)
 					val.send(message_byte)
 				except Exception as e:
 					pass
+					print('sssssssssssssssssssssssssssssssssssssssss')
 					val.close()
 
 	def recvMsg(self,conn,addr):
@@ -100,44 +103,51 @@ class ChatRoom(object):
 				   masks=msg[2:6]
 				   data=msg[6:]
 
-				print('masks',masks,'data',data,ii)
+				# print('masks',masks,'data',data,ii)
 				raw_str=""
 				i=0
 
 				for d in data:
+					print(d)
 					raw_str += chr(d ^ masks[i%4])
 					i+=1
 
-				print(raw_str)
-			except Exception as e:
-				print(e)
 
-
-			message = None
-			try:
-				message = {'code':200,'msg':raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')}
-			except Exception as e:
-				pass
-
-			if not message:
+				message = None
 				try:
-					message = {'code':200,'msg':raw_str.replace('%','\\').encode('utf8').decode('unicode_escape')}
+					message = {'code':200,'msg':raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')}
 				except Exception as e:
 					pass
-					
-			if ii == 0:
-				username = addr[0]+':'+str(addr[1])
-				username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
-			else:
-				message['username'] = username
-				self.sendMsg(json.dumps(message))
-			print('username',username)
-			ii += 1
 
-		
+				if not message:
+					try:
+						message = {'code':200,'msg':raw_str.replace('%','\\').encode('utf8').decode('unicode_escape')}
+					except Exception as e:
+						pass
+
+				#关闭
+				if message['msg'] == 'quit':
+					conn.close()
+					self.clients.pop(addr[0]+':'+str(addr[1]))
+					exit()	
+
+				if ii == 0:
+					username = addr[0]+':'+str(addr[1])
+					username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
+				else:
+					message['username'] = username
+					self.sendMsg(json.dumps(message))
+				print(username,message)
+				print(username,json.dumps(message))
+				ii += 1
 
 
-
+			except Exception as e:
+				print(e)
+				print(username,'退出了')
+				conn.close()
+				self.clients.pop(addr[0]+':'+str(addr[1]))
+				exit()
 
 
 	def main(self):
