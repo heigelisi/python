@@ -30,6 +30,7 @@ body{width: 100%; height: 100%; background: #000; position: relative;}
 .firstStep .firstName .btn{width: 100px; height: 40px; border: 0; background: #333; color: #fff; cursor: pointer;}
     </style>
 <script>  
+var showmsg;
 var socket;  
    
 function init(username){
@@ -38,17 +39,30 @@ function init(username){
     socket = new WebSocket(host);  
     socket.onopen    = function(msg){
         log('您已经进入聊天室');
-        socket.send(escape(username));
+        socket.send(conversion(username));
     };
     
     socket.onmessage = function(msg){
          msg = JSON.parse(msg.data)
          if (msg.username == $('.hd b').text()){
-            username = '我'
-         }else{
-            username = msg.username
-         }
-        log(username+":"+msg.msg);
+              username = '我'
+           }else{
+              username = msg.username
+           }
+          log(username+":"+msg.msg);
+         // if(msg.msg == 'complete'){
+
+         //   if (msg.username == $('.hd b').text()){
+         //      username = '我'
+         //   }else{
+         //      username = msg.username
+         //   }
+         //  log(username+":"+showmsg);
+         //  showmsg = '';
+         // }else{
+         //    showmsg += msg.msg
+         // }
+
     };
     socket.onclose   = function(msg){
         log("与服务器连接断开");
@@ -67,22 +81,43 @@ function send(){
       alert("Message can not be empty");
       return;
   }
+  // if (msg.length > 1000){
+  //   alert('不能超过1000个字符！');
+  //   return;
+  // }
+
   txt.val('');
   txt.focus();  
   try{
-      alert(escape(msg))
-        socket.send(escape(msg));
+      // alert(escape(msg))
+        socket.send(conversion(msg));
       $('.sayInfo').html(msg)
 //        log("我说："+msg);
   } catch(ex){
       log(ex);
   }
-}  
+}
+
+//转换中文
+function conversion(msg)  
+{
+  message = '';
+  for (var i = 0;i < msg.length; i++) {
+    msg_ = msg.substr(i,1);
+　　if(msg_.charCodeAt() > 255){ 
+      msg_ = escape(msg_)
+    }
+    message += msg_
+  }
+  
+  return message;
+}
+
 
 //刷新或关闭浏览器时 关闭socke
 window.onbeforeunload=function(){  
     try{  
-        socket.send(escape('quit'));  
+        socket.send(conversion('quit'));  
         socket.close();  
         socket=null;  
     }  
@@ -135,6 +170,7 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
     <div class="hd"><b></b>聊天记录</div>
     <div class="bd"></div>
 </div>
+<div>ssssss</div>
 <div class="sendBox">
     <textarea class="sendInfo"></textarea>
     <button onclick="send()">发送</button>
@@ -146,3 +182,4 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
     </div>
 </div>
 </html>  
+
