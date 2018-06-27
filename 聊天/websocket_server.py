@@ -70,7 +70,7 @@ class ChatRoom(object):
 				message_byte += bytes(message, encoding="utf8")
 				try:
 					print('ssssssssssssss',key)
-					val.send(message_byte)
+					val.sendall(message_byte)
 				except Exception as e:
 					pass
 					print('sssssssssssssssssssssssssssssssssssssssss')
@@ -81,7 +81,7 @@ class ChatRoom(object):
 		while True:
 
 			try:
-				msg = conn.recv(1024)
+				msg = conn.recv(2048)
 				if not msg:
 					return False
 				print(msg[1])
