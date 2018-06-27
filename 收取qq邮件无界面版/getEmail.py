@@ -38,7 +38,7 @@ class getEmail(object):
   def charge(self,conn):
     """收取邮件"""
     while True:
-      time.sleep(3)
+      time.sleep(10)
       msgList = []
       try:
         #收邮件
@@ -56,7 +56,7 @@ class getEmail(object):
       if msgList:
         #解析邮件
         for r in msgList:
-          if iii > 30:
+          if iii > 50:
             continue
           try:
             subject=sender=date=to=body = ''
@@ -124,7 +124,7 @@ class getEmail(object):
 
               elif 'ganji.com' in sender:
                 self.ganji_com(subject,sender,date,to,body)
-                # print('赶集')
+                print('赶集')
 
               elif 'zhaopinmail.com' in sender:
                 
@@ -155,6 +155,8 @@ class getEmail(object):
 
   def _51job_com(self,subject,sender,date,to,body):
     try:
+      # with open(subject+'.txt','w',encoding='utf8') as f:
+      #    f.write(body)
       company = re.compile(r""".*?应聘职位.*?word-break:break-all">(.*?)</td>.*?font-weight:normal">(.*?)</strong>.*?([男女]).*?(\d+.*?岁\(\d{4}/\d{1,2}/\d{1,2}\)).*?word-break:break-all">(\d{11})</td>.*?word-break:break-all"><a href="mailto:(.*?)">.*?居住地：.*?break-all">(.*?)</td>.*?""",re.S)
       basic = re.search(company,body)
       position = basic.group(1)
@@ -182,13 +184,16 @@ class getEmail(object):
     try:
       company = re.compile(r"(\\u[a-z0-9]{4})",re.S)
       text = re.findall(company,body)
+
       for i in text:
         a = i.encode('gbk').decode('unicode_escape')
         body =  body.replace(i,a)
-     
-      company = re.compile(r""".*?font-weight:bold">(.*?)</span>.*?投递职位：.*?>(.*?)</span>.*?font-size:16px">(\1（.*?）)</p>.*?工作地点：(.*?)</span>.*?电话：.*?(\d{11}).*?邮箱：(.*?)</.*?""",re.S)
+
+      # with open(subject+'.txt','w',encoding='utf8') as f:
+      #    f.write(body)
+
+      company = re.compile(r""".*?font-weight:bold">(.*?)</span>.*?投递职位：.*?>(.*?)</span>.*?font-size:16px">(\1（.*?）)</p>.*?工作地点：(.*?)</span>.*?电话：.*?(\d{11}).*?""",re.S)
       basic = re.search(company,body)
-      # print(basic)
       if basic:
         position = basic.group(2)
         username = basic.group(1)
@@ -197,7 +202,7 @@ class getEmail(object):
         age = age_sex[1].rstrip('）')
         address = basic.group(4)
         mobile = str(basic.group(5))
-        email = basic.group(6)
+        email = ''
       else:
         return False
 
@@ -215,7 +220,7 @@ class getEmail(object):
       self.showMsg('智联招聘')
       # print(body)
       #基本资料
-      company = re.compile(r'.*?<td>.*?line-height:50px">(.*?)</td>.*?style="font-weight:bold">([男|女])</font>.*?weight:bold">([0-9]+年[0-9]+月)</font><br />(.*?)<small.*?href="(https://ihr\.zhaopin\.com.*?)".*?',re.S)
+      company = re.compile(r'.*?<td>.*?line-height:50px">(.*?)</td>.*?style="font-weight:bold">([男|女])</font>.*?weight:bold">([0-9]+年[0-9]+月).*?</font><br />(.*?)<small.*?href="(https://ihr\.zhaopin\.com.*?)".*?',re.S)
       basic = re.search(company,body)
       if basic:
         username = basic.group(1)
@@ -241,6 +246,7 @@ class getEmail(object):
         else:
           return False
       except Exception as e:
+        exit()
         self.showMsg('智联招聘1',e)
         return False
 
