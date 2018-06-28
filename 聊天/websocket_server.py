@@ -128,7 +128,10 @@ class ChatRoom(object):
 					conn.close()
 					self.clients.pop(addr[0]+':'+str(addr[1]))
 					exit()	
-
+				timestamp = int(time.time())
+				time_local = time.localtime(timestamp)
+				dt = time.strftime("%Y-%m-%d %H:%M:%S",time_local)
+				message['date'] = str(dt)
 				if ii == 0:
 					username = addr[0]+':'+str(addr[1])
 					username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
@@ -171,14 +174,5 @@ if __name__ == '__main__':
 	ChatRoom('0.0.0.0',8082).main()
 
 
-
-
-# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# sock.bind(('localhost', 8082))
-# sock.listen(1000)
-
-
-# while 1:
-# 	headers = {}
-# 	conn,addr = sock.accept()
-# 	data = conn.recv(1024).decode()#接受数据
+# nohup python3 -u /www/pythonScript/liaotian/web.py > /www/pythonScript/liaotian/web.log 2>&1 &
+# nohup python3 -u /www/pythonScript/liaotian/websocket_server.py > /www/pythonScript/liaotian/websocket_server.log 2>&1 &

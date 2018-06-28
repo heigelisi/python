@@ -69,7 +69,7 @@ function init(username){
            }else{
               username = msg.username
            }
-	       log(msg.msg,username);
+	       log(msg.msg,msg.date,username);
     };
     //断开连接时执行
     socket.onclose   = function(msg){
@@ -90,7 +90,9 @@ function send(){
 	    return;
   	}
 	if(text){
-		str = '<li><div class="prompt"><span>发送中<img src="static/load.gif"></span></div><div class="right" ><span class="name" style="text-align: right;">我</span><p class="msg">'+text+'</p></div><div class="left" style="float:right;"><i class="icon"></i></div><div class="null"></div></li>';
+		var d = new Date;
+        date = d.toLocaleString();//返回一个完整的时间
+		str = '<li><div class="prompt"><span>发送中<img src="static/load.gif"></span></div><div class="right" ><span class="name" style="text-align: right;">我 <date> '+date+'</date></span><p class="msg">'+text+'</p></div><div class="left" style="float:right;"><i class="icon"></i></div><div class="null"></div></li>';
 		$('#msg ul').append(str);
 		$('textarea[name="msg"]').val('');
 		 $("#msg").scrollTop($("#msg")[0].scrollHeight);
@@ -164,9 +166,9 @@ function nameok(){
  
 }
 nameok()
-function log(msg,username='系统提醒'){
+function log(msg,date='',username='系统消息'){
 	if(username){
-		msghtml = '<li><div class="left"><i class="icon"></i></div><div class="right"><span class="name">'+username+'</span><p class="msg">'+msg+'</p></div><div class="null"></div></li>';
+		msghtml = '<li><div class="left"><i class="icon"></i></div><div class="right"><span class="name">'+username+'  <date>'+date+'</date></span><p class="msg">'+msg+'</p></div><div class="null"></div></li>';
 	    $('#msg ul').append(msghtml);
 	     $("#msg").scrollTop($("#msg")[0].scrollHeight);
 	}
