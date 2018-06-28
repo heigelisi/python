@@ -79,6 +79,7 @@ function init(username){
 
 //发送消息给服务器 
 function send(){  
+	$('.expression').css('display','none');
 	text = $('textarea[name="msg"]').val();
 	if (text.length > 1000){
 	    alert('不能超过1000个字符！');
@@ -88,7 +89,7 @@ function send(){
 		str = '<li><div class="prompt"><span>发送中<img src="static/load.gif"></span></div><div class="right" ><span class="name" style="text-align: right;">我</span><p class="msg">'+text+'</p></div><div class="left" style="float:right;"><i class="icon"></i></div><div class="null"></div></li>';
 		$('#msg ul').append(str);
 		$('textarea[name="msg"]').val('');
-
+		 $("#msg").scrollTop($("#msg")[0].scrollHeight);
 		try{
         	socket.send(conversion(text));
       		$('.sayInfo').html(text)
@@ -163,6 +164,7 @@ function log(msg,username='系统提醒'){
 	if(username){
 		msghtml = '<li><div class="left"><i class="icon"></i></div><div class="right"><span class="name">'+username+'</span><p class="msg">'+msg+'</p></div><div class="null"></div></li>';
 	    $('#msg ul').append(msghtml);
+	     $("#msg").scrollTop($("#msg")[0].scrollHeight);
 	}
 
     //动画
@@ -178,4 +180,5 @@ function log(msg,username='系统提醒'){
 function show(obj){
     obj.fadeIn()
 }
-function onkey(event){ if(event.keyCode==13){ send(); } }  
+
+window.onkeydown = function(event){ if(event.keyCode==13){ send(); } }  

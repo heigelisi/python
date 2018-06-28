@@ -1,185 +1,84 @@
-<html>  
-<head>  
-<title>WebSocket</title>
-   <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <style>
-        *{font-family: "微软雅黑"; margin: 0; padding: 0;}
-
-html,
-body{width: 100%; height: 100%; background: #000; position: relative;}
-
-.msgInfo{position: fixed; right: 2%; top: 2%; height: 96%; width: 20%; background: #666;}
-.msgInfo .hd{width: 100%; text-align: center; height: 40px; line-height: 40px; color: #fff; background: #333;}
-.msgInfo .bd{ padding: 20px; height: 100%; overflow: auto; color: #fff; line-height: 30px;}
-.msgInfo .bd p{margin: 5px 0;}
-
-.sendBox{position: fixed; left: 2%; bottom: 2%; width: 74%; height: 10%; background: #666; overflow: hidden;}
-.sendBox textarea{width: 90%; height: 100%; display: inline-block; background: #666; color: #fff; border: none; float: left;}
-.sendBox button{width: 10%; height: 100%; display: inline-block; background: #333; cursor: pointer; color: #fff; border: none; float: left;}
-
-.renBox{margin-left: 2%; margin-top: 2%; width: 74%; height: 84%; position: relative; overflow: hidden; float: left;}
-.renBox .ren{display: inline-block; position: absolute; left: 500px; top: 500px;}
-.renBox .ren .renHead{ display: inline-block; width: 20px; height: 20px; border-radius: 10px; background: #fff;}
-.renBox .ren .sayInfo{color: #fff; position: absolute; top: -30px; width: 200px; left: -90px; text-align: center;}
-.renBox div{color: #fff; margin-left: 100%; width: 100%; overflow: hidden; height: 30px;line-height: 30px; font-size: 20px;}
-
-
-.firstStep{position: fixed; width: 100%; height: 100%; z-index: 999; background: #000; text-align: center;}
-.firstStep .firstName{display: inline-block; padding-top: 300px;}
-.firstStep .firstName .username{width: 300px; height: 40px; border: 0; padding: 0 10px;}
-.firstStep .firstName .btn{width: 100px; height: 40px; border: 0; background: #333; color: #fff; cursor: pointer;}
-    </style>
-<script>  
-var showmsg;
-var socket;  
-   
-function init(username){
-  var host = "ws://localhost:8082";
-  try{  
-    socket = new WebSocket(host);  
-    socket.onopen    = function(msg){
-        log('您已经进入聊天室');
-        socket.send(conversion(username));
-    };
-    
-    socket.onmessage = function(msg){
-         msg = JSON.parse(msg.data)
-         if (msg.username == $('.hd b').text()){
-              username = '我'
-           }else{
-              username = msg.username
-           }
-          log(username+":"+msg.msg);
-         // if(msg.msg == 'complete'){
-
-         //   if (msg.username == $('.hd b').text()){
-         //      username = '我'
-         //   }else{
-         //      username = msg.username
-         //   }
-         //  log(username+":"+showmsg);
-         //  showmsg = '';
-         // }else{
-         //    showmsg += msg.msg
-         // }
-
-    };
-    socket.onclose   = function(msg){
-        log("与服务器连接断开");
-    };
-  }catch(ex){
-      log(ex);
-  }
-  $(".sendInfo").focus();
-}  
-   
-function send(){  
-  var txt,msg;  
-  txt = $(".sendInfo");
-  msg = txt.val();
-  if(!msg){
-      alert("Message can not be empty");
-      return;
-  }
-  // if (msg.length > 1000){
-  //   alert('不能超过1000个字符！');
-  //   return;
-  // }
-
-  txt.val('');
-  txt.focus();  
-  try{
-      // alert(escape(msg))
-        socket.send(conversion(msg));
-      $('.sayInfo').html(msg)
-//        log("我说："+msg);
-  } catch(ex){
-      log(ex);
-  }
-}
-
-//转换中文
-function conversion(msg)  
-{
-  message = '';
-  for (var i = 0;i < msg.length; i++) {
-    msg_ = msg.substr(i,1);
-　　if(msg_.charCodeAt() > 255){ 
-      msg_ = escape(msg_)
-    }
-    message += msg_
-  }
-  
-  return message;
-}
-
-
-//刷新或关闭浏览器时 关闭socke
-window.onbeforeunload=function(){  
-    try{  
-        socket.send(conversion('quit'));  
-        socket.close();  
-        socket=null;  
-    }  
-    catch(ex){  
-        log(ex);  
-    }  
-};  
-
-function nameok(){
-    var _name = $('input[name="username"]').val();
-    if(!_name){
-        alert('请给自己取个名字吧')
-    }else{
-         $('.hd b').text(_name)
-        $('.firstStep').remove()
-        init(_name)
-    }
-}
-
-function log(msg){
-    $('.msgInfo .bd').append('<p>'+ msg +'</p>');
-
-    //动画
-    var _html = $('<div>',{'class':'showMsg'});
-    _html.html(msg);
-    $('.renBox').append(_html);
-    _html.animate({
-        'marginLeft':'-100%'
-    }, 10000, function(){
-        _html.remove()
-    })
-}
-function show(obj){
-    obj.fadeIn()
-}
-function onkey(event){ if(event.keyCode==13){ send(); } }  
-</script>
-<link href="/static/css/css.css" type="text/css" rel="stylesheet" />
-</head>  
-  
-  
+<!DOCTYPE html>
+<html>
+<head>
+	<title>聊天室</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  	<link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
 <body>
-<div class="renBox">
-    <!--<div class="ren">-->
-        <!--<span class="sayInfo"></span>-->
-        <!--<span class="renHead"></span>-->
-    <!--</div>-->
-</div>
-<div class="msgInfo">
-    <div class="hd"><b></b>聊天记录</div>
-    <div class="bd"></div>
-</div>
-<div>ssssss</div>
-<div class="sendBox">
-    <textarea class="sendInfo"></textarea>
-    <button onclick="send()">发送</button>
-</div>
-</body>  
-<div class="firstStep">
-    <div class="firstName">
-        <input type="text" class="username" name="username" placeholder="给自己取一个响亮的名字！" /><input type="button" class="btn" onclick="nameok()" value="进入聊天" />
-    </div>
-</div>
-</html>  
+	<div id="conten">
+		<div id="view">
+			<video controls width="100%" poster="http://wap.heigrace.com/fitness/static/video/1.png" height="100%" id="myVideo1"><source src="http://ugcyd.qq.com/a06843jxi16.mp4?sdtfrom=v1010&guid=0e77a48ee0b9a92f29fbc074aa71ca77&vkey=0FCBFECB5C71D462D606E8F7B73A288CD4E1418B56BFFB18BA9ECD0AAE344823175BEB0BF3323889B4DBD082748D568308606718B91996AF4EE72DACE8C18CD8FD89EF66FA10AD3C80062003CC2ABC34D10EACC39F0DEDD4CBE1F15EB8D2327F5703B82F1D09F0709549E6FE8757D76F9BB3A8E28721C3B6"></video>
+		</div>
 
+		<div id="msg">
+			<ul>
+				<li>
+				<div class="prompt"><span>发送中<img src="static/load.gif"></span></div>
+					<div class="right" >
+						<span class="name" style="text-align: right;">周飞</span>
+						<p class="msg">QQ头像-【个性网】fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
+					</div>
+					<div class="left" style="float:right;">
+						<i style="background-image: url(static/1.jpeg);" class="icon"></i>
+					</div>
+					<div class="null"></div>
+				</li>
+
+				<li>
+					<div class="left">
+						<i class="icon"></i>
+					</div>
+					<div class="right">
+						<span class="name">周飞</span>
+						<p class="msg">QQ头像-【个性网】-</p>
+					</div>
+					<div class="null"></div>
+				</li>
+			</ul>
+		</div>
+		<div id="input">
+			<div class="other">
+				<ul>
+					<li>
+						<a href="javascript:biaoqing();">表情</a>
+						<div class="expression">
+							<span>😀</span> 
+							<span>😁</span>
+							<span>😂</span>
+							 <span>🤣</span>
+							 <span>😃</span>
+							 <span>😄</span>
+							 <span>😅</span>
+							 <span>😆</span>
+							 <span>😉</span>
+							<span>😊</span>
+							 <span>😋</span>
+							 <span>😎</span>
+							 <span>😍</span>
+							<span>😘</span>
+							<span>😗</span>
+							<span>😙</span>
+
+						</div>
+					</li>
+				</ul>
+			</div>
+			<textarea name="msg" style=""></textarea><button id="send" onclick="send()">发送</button>
+		</div>
+	</div>
+	<div class="username">
+		<div>
+			<input type="text"  name="username" placeholder="给自己取一个响亮的名字！" />
+			<input type="button" class="btn" onclick="nameok()" value="进入聊天" />
+		</div>
+	</div>
+	<div class="renBox">
+	</div>
+</body>
+<script type="text/javascript" src="static/msg.js"></script>
+</html>

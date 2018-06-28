@@ -69,11 +69,9 @@ class ChatRoom(object):
 				    message_byte += c
 				message_byte += bytes(message, encoding="utf8")
 				try:
-					print('ssssssssssssss',key)
 					val.sendall(message_byte)
 				except Exception as e:
 					pass
-					print('sssssssssssssssssssssssssssssssssssssssss')
 					val.close()
 
 	def recvMsg(self,conn,addr):
@@ -84,7 +82,7 @@ class ChatRoom(object):
 				msg = conn.recv(2048)
 				if not msg:
 					return False
-				print(msg[1])
+				# print(msg[1])
 
 				code_len =  msg[1] & 127
 
@@ -108,7 +106,7 @@ class ChatRoom(object):
 				i=0
 
 				for d in data:
-					print(d)
+					# print(d)
 					raw_str += chr(d ^ masks[i%4])
 					i+=1
 
@@ -134,11 +132,14 @@ class ChatRoom(object):
 				if ii == 0:
 					username = addr[0]+':'+str(addr[1])
 					username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
+					message['username'] = '系统提醒'
+					message['msg'] = username+' 进入了聊天室'
+					self.sendMsg(json.dumps(message))
 				else:
 					message['username'] = username
 					self.sendMsg(json.dumps(message))
-				print(username,message)
-				print(username,json.dumps(message))
+				# print(username,message)
+				# print(username,json.dumps(message))
 				ii += 1
 
 
@@ -157,7 +158,6 @@ class ChatRoom(object):
 			data = conn.recv(2048)#接受数据
 			print(data)
 			data = data.decode()
-			print('ddddddddddddddddddd',data,'ddddddddddddddddddddddddddd')
 			if self.shakeHands(conn,data):
 				self.clients[addr[0]+':'+str(addr[1])] = conn
 				w = threading.Thread(target=self.recvMsg,args=(conn,addr,))
@@ -168,7 +168,7 @@ class ChatRoom(object):
 
 
 if __name__ == '__main__':
-	ChatRoom('localhost',8082).main()
+	ChatRoom('0.0.0.0',8082).main()
 
 
 
