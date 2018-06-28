@@ -7,132 +7,7 @@
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
   crossorigin="anonymous"></script>
   	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-	<style type="text/css">
-	li{list-style-type:none;}a{text-decoration:none;}
-		#conten{
-			width: 100%;
-			/*height: 100%;*/
-			position:absolute;
-			/*position:fixed;*/
-			top: 0px;
-			bottom: 0px;
-			/*background:#000;*/
-		}
-		*{padding:0;margin:0;}
-		#view{
-			width: 80%;
-			height: 80%;
-			background-color: #000;
-			float:left;
-		}
-		#msg{
-			width: 20%;
-			height: 100%;
-			background-color: #eee;
-			float:right;
-			overflow : scroll;
-		}
-		#msg li{
-			width:98%;
-			min-height: 10px;
-			margin:0 auto;
-			/*padding:5px;*/
-			margin-top: 5px;
-			clear:both;
-		}
-
-		#msg li .left{
-			width: 40px;
-			height: auto;
-			float:left;
-		}
-		#msg li .right{
-			max-width: 85%;
-			float:left;
-			padding-left: 5px;
-		}
-
-		#msg li .right .name{
-			display: block;
-			max-width: 100%;
-			height: 20px;
-			word-break:break-all;
-			font-size: 14px;
-			overflow:hidden;
-			line-height: 20px;
-		}
-		#msg li .right .msg{
-			max-width: 100%;
-			word-break:break-all;
-			font-size: 15px;
-			/*overflow:hidden;*/
-			line-height: 20px;
-			background-color: #fff;
-			line-height: 25px;
-			padding:3px;
-		}
-
-
-		#msg li .icon{
-			display: inline-block;
-			width: 40px;
-			height: 40px;
-			background-color: #000;
-			background-image: url(/static/1.jpeg);
-			background-repeat: no-repeat;
-			background-size: 40px 40px;
-		}
-
-
-		#input{
-			width:80%;
-			height: 20%;
-			float:left;
-			/*background-color: #00f;*/
-		}
-		.null{
-			width:100%;
-			height: 10px;
-			clear:both;
-		}
-
-		.other{
-			width:100%;
-			height: 30px;
-			background:#eee;
-			border-top: 1px solid #000;
-		}
-
-		.other li{
-			/*width:;*/
-			height: 30px;
-			line-height: 30px;
-			padding-left: 5px;
-			padding-right: 5px;
-			border-right: 1px solid #f00;
-			float: left;
-		}
-
-		.expression{
-			height: auto;
-			position:relative;
-			top:-66px;
-			border:1px solid #eee;
-			background-color: #eee;
-			display: none;
-		}
-		.expression span{
-			display: inline-block;
-			width: 30px;
-			height: 30px;
-			font-size: 25px;
-			line-height: 30px;
-			color: #FFCC2E;
-			cursor:pointer;
-
-		}
-
-	</style>
+  	<link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
 	<div id="conten">
@@ -143,15 +18,13 @@
 		<div id="msg">
 			<ul>
 				<li>
-					<div class="right">
+				<div class="prompt"><span>发送中<img src="static/load.gif"></span></div>
+					<div class="right" >
 						<span class="name" style="text-align: right;">周飞</span>
-						<p class="msg">QQ头像-【个性网】-2018原创QQ头像发布中心-女生头像_QQ头像男生_...
-2018最新版女生头像、男生头像、QQ情侣头像、欧美头像等,个性网QQ头像原创发布中心,是互联网QQ头像的发源地。
-www.gexing.com/qqtouxi...  - 百度快照 - 231条评价
-QQ男生头像_帅气的男生头像_我要个性网</p>
+						<p class="msg">QQ头像-【个性网】fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
 					</div>
-					<div class="left">
-						<i class="icon"></i>
+					<div class="left" style="float:right;">
+						<i style="background-image: url(static/1.jpeg);" class="icon"></i>
 					</div>
 					<div class="null"></div>
 				</li>
@@ -162,17 +35,10 @@ QQ男生头像_帅气的男生头像_我要个性网</p>
 					</div>
 					<div class="right">
 						<span class="name">周飞</span>
-						<p class="msg">QQ头像-【个性网】-2018原创QQ头像发布中心-女生头像_QQ头像男生_...
-2018最新版女生头像、男生头像、QQ情侣头像、欧美头像等,个性网QQ头像原创发布中心,是互联网QQ头像的发源地。
-www.gexing.com/qqtouxi...  - 百度快照 - 231条评价
-QQ男生头像_帅气的男生头像_我要个性网</p>
+						<p class="msg">QQ头像-【个性网】-</p>
 					</div>
 					<div class="null"></div>
 				</li>
-
-
-
-
 			</ul>
 		</div>
 		<div id="input">
@@ -183,73 +49,36 @@ QQ男生头像_帅气的男生头像_我要个性网</p>
 						<div class="expression">
 							<span>😀</span> 
 							<span>😁</span>
-							<span> 😂</span>
+							<span>😂</span>
 							 <span>🤣</span>
 							 <span>😃</span>
 							 <span>😄</span>
 							 <span>😅</span>
 							 <span>😆</span>
-							 <span> 😉</span>
-							<span> 😊</span>
+							 <span>😉</span>
+							<span>😊</span>
 							 <span>😋</span>
 							 <span>😎</span>
-							 <span> 😍</span>
-							<span> 😘</span>
-							<span> 😗</span>
-							<span> 😙</span>
+							 <span>😍</span>
+							<span>😘</span>
+							<span>😗</span>
+							<span>😙</span>
 
 						</div>
 					</li>
 				</ul>
 			</div>
-			<textarea style="width:90%;height: 500px;max-height: 100%;float:left;"></textarea><button id="send" style="width:9%;height: 500px;max-height: 100%;float:left;font-size: 15px;text-align: center;background-color: #00f;color: #fff;">发送</button>
+			<textarea name="msg" style=""></textarea><button id="send" onclick="send()">发送</button>
 		</div>
 	</div>
+	<div class="username">
+		<div>
+			<input type="text"  name="username" placeholder="给自己取一个响亮的名字！" />
+			<input type="button" class="btn" onclick="nameok()" value="进入聊天" />
+		</div>
+	</div>
+	<div class="renBox">
+	</div>
 </body>
-<script type="text/javascript">
-	width = $('#conten').width()
-	height = $('#conten').height()
-	if(width < 720){
-		$('#view').css('width','100%').css('height','45%').css('float','none');
-		$('#msg').css('width','100%').css('float','none').css('height','40%');
-		$('#input').css('width','100%').css('height','15%').css('float','none');
-		$('textarea').css('width','85%');
-		$('button').css('width','14%');
-	}
-
-	$('.expression').css('width',width*0.8+'px');
-
-
-
-	$('video').click(function() {
-		v = document.getElementById('myVideo1')
-		if(!v.paused){
-			v.pause()
-
-		}else{
-			v.play()
-		}
-	})
-
-	function biaoqing(){
-		display = $('.expression').css('display')
-		if(display == 'none'){
-			$('.expression').css('display','block');
-		}else{
-			$('.expression').css('display','none');
-		}
-	}
-	$('.expression span').click(function(){
-		$('textarea').append($(this).text())
-	})
-
-
-
-$('#send').on('click',function(){
-	text = $('textarea').text();
-	str = '<li><div class="right"><span class="name" style="text-align: right;">周飞</span><p class="msg">'+text+'</p></div><div class="left"><i class="icon"></i></div><div class="null"></div></li>';
-	$('#msg ul').append(str)
-})
-
-</script>
+<script type="text/javascript" src="static/msg.js"></script>
 </html>
