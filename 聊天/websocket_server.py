@@ -132,7 +132,7 @@ class ChatRoom(object):
 				if ii == 0:
 					username = addr[0]+':'+str(addr[1])
 					username = raw_str.replace('%','\\').encode('gbk').decode('unicode_escape')
-					message['username'] = '系统提醒'
+					message['username'] = '系统消息'
 					message['msg'] = username+' 进入了聊天室'
 					self.sendMsg(json.dumps(message))
 				else:

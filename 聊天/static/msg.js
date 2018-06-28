@@ -6,6 +6,7 @@
 		$('#input').css('width','100%').css('height','15%').css('float','none');
 		$('textarea').css('width','85%');
 		$('button').css('width','14%');
+		$('#msgtitle').css('display','none');
 	}
 	$('.expression').css('width',width*0.8+'px');
 	$('video').click(function() {
@@ -58,6 +59,9 @@ function init(username){
     //接受消息
     socket.onmessage = function(msg){
          msg = JSON.parse(msg.data)
+         if(msg.msg == sessionStorage.username+' 进入了聊天室'){
+         	return;
+         }
          if (msg.username == sessionStorage.username){
               username = false
               $('.prompt').css('display','none');
