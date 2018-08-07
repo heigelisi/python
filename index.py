@@ -142,6 +142,7 @@ bool型 True == 1 但是 不等于大于1的
 	x.sort(reverse=True)#反转排序
 	用函数来排序
 	sorted(x)#返回排序后的
+	x.reverse #完全反转
 
 
 	# 不可变序列

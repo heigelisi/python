@@ -157,7 +157,7 @@ class getEmail(object):
     try:
       # with open(subject+'.txt','w',encoding='utf8') as f:
       #    f.write(body)
-      company = re.compile(r""".*?应聘职位.*?word-break:break-all">(.*?)</td>.*?font-weight:normal">(.*?)</strong>.*?([男女]).*?(\d+.*?岁\(\d{4}/\d{1,2}/\d{1,2}\)).*?word-break:break-all">(\d{11})</td>.*?word-break:break-all"><a href="mailto:(.*?)">.*?居住地：.*?break-all">(.*?)</td>.*?""",re.S)
+      company = re.compile(r""".*?应聘职位.*?word-break:break-all">(.*?)</td>.*?font-weight:normal">(.*?)</strong>.*?([男女]).*?(\d+.*?岁\(\d{4}/\d{1,2}/\d{1,2}\)).*?word-break:break-all">(\d{11}|\d{3}-\d{6,8})</td>.*?word-break:break-all"><a href="mailto:(.*?)">.*?居住地：.*?break-all">(.*?)</td>.*?""",re.S)
       basic = re.search(company,body)
       position = basic.group(1)
       username = basic.group(2)
@@ -455,7 +455,7 @@ class getEmail(object):
                     "81116447":f_memo2,
                     "81127941":f_memo3,
                     "81127942":f_memo4,
-                    "81127942":r[11],
+                    "81163784":r[11],
                     "customFieldMapping": {
                       "81116447": {
                           "option_id": "",
