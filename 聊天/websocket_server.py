@@ -33,6 +33,7 @@ class ChatRoom(object):
 		headers = {}
 		try:
 			header, data = data.split('\r\n\r\n', 1)
+			print(header,data)
 			for line in header.split('\r\n')[1:]:
 				key, val = line.split(': ', 1)
 				headers[key] = val
@@ -43,6 +44,7 @@ class ChatRoom(object):
 			connect = conn.send(str_handshake.encode())
 			return True
 		except Exception as e:
+			print(e)
 			return False
 
 	def sendMsg(self,message):
@@ -79,7 +81,7 @@ class ChatRoom(object):
 		while True:
 
 			try:
-				msg = conn.recv(2048)
+				msg = conn.recv(1024)
 				if not msg:
 					return False
 				# print(msg[1])
@@ -158,15 +160,16 @@ class ChatRoom(object):
 		
 		while True:
 			conn,addr = self.sock.accept()
-			data = conn.recv(2048)#接受数据
+			data = conn.recv(1024)#接受数据
 			print(data)
-			data = data.decode()
+			data = data.decode('utf8')
 			if self.shakeHands(conn,data):
 				self.clients[addr[0]+':'+str(addr[1])] = conn
 				w = threading.Thread(target=self.recvMsg,args=(conn,addr,))
 				w.start()
 
 			else:
+				print(conn,addr,'握手失败')
 				continue
 
 

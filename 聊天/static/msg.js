@@ -54,7 +54,7 @@ function init(username){
     socket = new WebSocket(host);  
     socket.onopen    = function(msg){
         log('您已经进入聊天室');
-        socket.send(conversion(username));//发送用户名称给服务器端
+        socket.send(username);//发送用户名称给服务器端
     };
     //接受消息
     socket.onmessage = function(msg){
