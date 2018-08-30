@@ -1,0 +1,4 @@
+定时关机
+开启：shutdown.exe -s -t 3600(3600秒后关机) 
+或    shutdown -s -t 7200 
+关闭：shutdown.exe -a
