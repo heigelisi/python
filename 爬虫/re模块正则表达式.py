@@ -1,6 +1,5 @@
 
 import re
-
 # re.match(正则表达式,字符串,flags=0匹配模式)
 content = "Hello 123 4567 World_This is a Regx Demo"
 result = re.match("^Hello\s\d\d\d\s\d{4}\s\w{10}.*Demo$",content)

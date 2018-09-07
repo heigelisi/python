@@ -1,3 +1,11 @@
+# 读写2003 excel
+import xlrd
+import xlwt
+# 读写2007 excel
+import openpyxl
+
+
+
 import xlrd
 
 workbook = xlrd.open_workbook('X站论坛.xlsx')

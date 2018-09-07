@@ -62,7 +62,7 @@ class Spider(object):
 					sys.exit()
 
 				#判断是否是dz
-				if 'href="forum.php"' in html or "href='forum.php'" in html:
+				if 'href="forum.php' in html or "href='forum.php" in html:
 					url_ = url.split('/')
 					url = url_[0]+'//'+url_[2]
 					dz = True
