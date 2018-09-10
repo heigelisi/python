@@ -150,6 +150,7 @@ class MonitoringDZ(object):
 				self.showlog(browser,url+"\t获取cookie失败！错误信息："+message+"\r")
 
 		except Exception as e:
+			print(e)
 			exit()
 			pass
 			# print(e)

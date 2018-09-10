@@ -1,0 +1,4 @@
+[0704/204035.370:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0704/204035.371:ERROR:exception_snapshot_win.cc(88)] thread ID 12148 not found in process
+[0704/204834.227:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0704/204834.229:ERROR:exception_snapshot_win.cc(88)] thread ID 2448 not found in process
