@@ -17,6 +17,8 @@ insertsql = "insert into user(username,pwd,sex,tel,address,icon,status,addtime,w
 
 try:
 	res = cursor.execute(insertsql.encode('utf8'));#执行sql
+	# 获取自增id
+	dataid = cursor.lastrowid;
 	connect.commit();#执行提交
 	print(res)
 except Exception as e:

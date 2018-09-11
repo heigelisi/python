@@ -41,11 +41,11 @@ html = requests.get('http://www.baidu.com',allow_redirects=False,headers=headers
 
 
 #添加headers
-# headers = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3278.0 Safari/537.36',
-#     'Referer': 'http://www.lagou.com/zhaopin/Python/?labelWords=label',
-#     'Connection': 'keep-alive'
-# }
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3278.0 Safari/537.36',
+    'Referer': 'http://www.lagou.com/zhaopin/Python/?labelWords=label',
+    'Connection': 'keep-alive'
+}
 # response = requests.get('http://www.lagou.com/zhaopin/Python/?labelWords=label',headers=headers)
 # print(response.text)
 
