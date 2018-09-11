@@ -3,12 +3,13 @@
 import os,sys,time,datetime,pymysql;
 host = "localhost";
 user = "root";
-passwd = "123456";
-database = "message";
+passwd = "";
+database = "mobile";
 port = 3306;
 charset = 'utf8';
 class Model(object):
 	"""数据库操作"""
+	_where = None;
 	def __init__(self,host=host,user=user,passwd=passwd,database=database,port=port,charset=charset):
 		try:
 			self.host=host;
@@ -108,7 +109,7 @@ class Model(object):
 					self.connect.commit();
 					dataid.append(self.cursor.lastrowid);
 				except Exception as e:
-					# self.connect.rollbock();
+					self.connect.rollback();
 					print(row,e);
 			return dataid;
 
@@ -116,9 +117,92 @@ class Model(object):
 			print(e)
 			
 
-	def delete(self,where):
+	def where(self,conditions=None):
+
+		try:
+			if type(conditions) == type(''):
+				conditions.strip();
+			if conditions != None and len(conditions) == 0:
+				print('条件不能为空');
+				exit();
+
+			if type(conditions) == type('') and conditions == 'all':
+				self._where = '';
+			elif type(conditions) == type(''):
+				self._where = "where "+conditions;
+			
+		except Exception as e:
+			print(e)
+			pass
+		return self;
+
+
+	def delete(self,where=None):
+		try:
+
+			if type(where) == type(''):
+				where.strip();
+			if where != None and len(where) == 0:
+				print('条件不能为空');
+				exit();
+
+			if type(where) == type('') or type(where) == type(1):
+				where = 'where '+self.fields[self.column_key.index('PRI')]+'='+str(where);
+			elif type(where) == type({}):
+				where = list(where.items())[0];
+				key = where[0];
+				val = where[1];
+				if key not in self.fields:
+					print(key,'字段不存在');
+					exit();
+				where = "where "+key+"='%s'"%(str(val));
+			else:
+				pass
+				where = self._where;
+
+			if where == None:
+				print('不能没有删除条件');
+				exit();
+
+			#执行删除
+			sql = "delete from %s %s"%(self._table,where);
+			res = self.cursor.execute(sql);
+			if res > 0:
+				self.connect.commit();
+				return res;
+			else:
+				self.connect.rollback();
+				return False;
+				
+		except Exception as e:
+			print(e);
+			return False;
 		
 
+	def update(self,data):
+		try:
+			data = self.__filter(data)[0];
+			if not data:
+				exit();
+
+			#组建sql
+			where = self._where;
+			if not where:
+				where = '';
+			setdata = [];
+			for k,v in data.items():
+				setdata.append(k+"='%s'"%str(v));
+			sql = "update %s set %s %s"%(self._table,','.join(setdata),where);
+			res = self.cursor.execute(sql);
+			if res:
+				self.connect.commit();
+				return res;
+			else:
+				self.connect.rollback();
+				return False;
+		except Exception as e:
+			print(e);
+			return False;
 
 
 	def select(self):
@@ -130,7 +214,7 @@ class Model(object):
 
 
 
-print(Model().table('msgdata').insert([{'mobile':'13539993040','num':'10','msg':'测试','fff':'vvvv'},{'mobile':'13539993040','num':'10','fff':'vvvv'},{'mobile':'13539993040','num':'10','msg':'测试','fff':'vvvv'}]))
+print(Model().table('linfei_images').where('id=9').update({'name':'ffff','description':'hehehe','ffff':'vvv'}))
 
 
 
