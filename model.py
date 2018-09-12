@@ -9,7 +9,9 @@ port = 3306;
 charset = 'utf8';
 class Model(object):
 	"""数据库操作"""
-	_where = None;
+	_where = '';
+	_order = '';
+	_fields_ = '';
 	def __init__(self,host=host,user=user,passwd=passwd,database=database,port=port,charset=charset):
 		try:
 			self.host=host;
@@ -46,11 +48,11 @@ class Model(object):
 			sql = "select COLUMN_NAME,column_comment,column_key from INFORMATION_SCHEMA.Columns where table_name='%s' and table_schema='%s'"%(tname,self.database);
 			self.cursor.execute(sql);
 			fields_obj = self.cursor.fetchall();
-			self.fields = [];#字段
+			self._fields = [];#字段
 			self.comment = [];#注释
 			self.column_key = [];#索引
 			for f in fields_obj:
-				self.fields.append(f[0]);
+				self._fields.append(f[0]);
 				self.comment.append(f[1]);
 				self.column_key.append(f[2]);
 
@@ -82,8 +84,8 @@ class Model(object):
 				rowdata = {};
 				for r in row_:
 					#如果数据中不存在此字段去除
-					if r in self.fields:
-						rowdata[r] = row.get(r);
+					if r in self._fields:
+						rowdata[r] = str(row.get(r));
 				data.append(rowdata);
 
 			return data;
@@ -103,7 +105,7 @@ class Model(object):
 			for row in data:
 				key = ','.join(row.keys());
 				val = "'"+"','".join(row.values())+"'";
-				sql = "insert into %s(%s) values(%s)"%(self._table,key,val);
+				self.sql = sql = "insert into %s(%s) values(%s)"%(self._table,key,val);
 				try:
 					self.cursor.execute(sql);
 					self.connect.commit();
@@ -111,26 +113,28 @@ class Model(object):
 				except Exception as e:
 					self.connect.rollback();
 					print(row,e);
+			if len(dataid) == 1:
+				return dataid[0];
 			return dataid;
 
 		except Exception as e:
-			print(e)
+			print('insert',e)
 			
 
-	def where(self,conditions=None):
+	def where(self,conditions=''):
 
 		try:
 			if type(conditions) == type(''):
-				conditions.strip();
-			if conditions != None and len(conditions) == 0:
-				print('条件不能为空');
-				exit();
-
-			if type(conditions) == type('') and conditions == 'all':
+				conditions = conditions.strip();
+			else:
 				self._where = '';
-			elif type(conditions) == type(''):
+
+			if not conditions or conditions == 'all':
+				self._where = '';
+
+			else:
 				self._where = "where "+conditions;
-			
+
 		except Exception as e:
 			print(e)
 			pass
@@ -147,12 +151,12 @@ class Model(object):
 				exit();
 
 			if type(where) == type('') or type(where) == type(1):
-				where = 'where '+self.fields[self.column_key.index('PRI')]+'='+str(where);
+				where = 'where '+self._fields[self.column_key.index('PRI')]+'='+str(where);
 			elif type(where) == type({}):
 				where = list(where.items())[0];
 				key = where[0];
 				val = where[1];
-				if key not in self.fields:
+				if key not in self._fields:
 					print(key,'字段不存在');
 					exit();
 				where = "where "+key+"='%s'"%(str(val));
@@ -165,7 +169,7 @@ class Model(object):
 				exit();
 
 			#执行删除
-			sql = "delete from %s %s"%(self._table,where);
+			self.sql = sql = "delete from %s %s"%(self._table,where);
 			res = self.cursor.execute(sql);
 			if res > 0:
 				self.connect.commit();
@@ -187,12 +191,10 @@ class Model(object):
 
 			#组建sql
 			where = self._where;
-			if not where:
-				where = '';
 			setdata = [];
 			for k,v in data.items():
 				setdata.append(k+"='%s'"%str(v));
-			sql = "update %s set %s %s"%(self._table,','.join(setdata),where);
+			self.sql = sql = "update %s set %s %s"%(self._table,','.join(setdata),where);
 			res = self.cursor.execute(sql);
 			if res:
 				self.connect.commit();
@@ -204,17 +206,167 @@ class Model(object):
 			print(e);
 			return False;
 
+	def fields(self,field=None):
+		try:
+			if not field or type(field) != type(''):
+				self._fields_ = ','.join(self._fields);
+
+			else:
+				#过滤非法字段
+				fieldList = field.split(',');
+				_fields_ = [];
+				for f in fieldList:
+					if f in self._fields:
+						_fields_.append(f);
+				if _fields_:
+					self._fields_ = ','.join(_fields_);
+				else:
+					self._fields_ = ','.join(self._fields);
+
+
+		except Exception as e:
+			pass
+		return self;
+
+	def conversionData(self,data):
+		try:
+			if not data:
+				return None;
+			#获取查询的字段
+			fields = self._fields_.split(',');
+			data_ = {};
+			for i in data:
+				data_[fields[data.index(i)]] = i;
+			
+			return data_;
+		except Exception as e:
+			pass
+
+	def find(self):
+		"""查询一条数据"""
+		try:
+			#获取where
+			where = self._where;
+
+			#获取排序方式
+			order = self._order;
+
+			#获取要查询的字段
+			fields = self._fields_;
+			if fields == None:
+				fields = "*";
+
+			#组建sql
+			self.sql = sql = "select %s from %s %s %s limit 1"%(fields,self._table,where,order);
+			self.cursor.execute(sql);
+			data = self.cursor.fetchone();
+			if not data:
+				return None;
+
+
+			return self.conversionData(data);
+
+		except Exception as e:
+			print('find',e);
+			pass
+
+	def order(self,way=''):
+		"""排序"""
+		try:
+			if type(way) == type(''):
+				way = way.strip();
+			else:
+				way = '';
+			if not way:
+				self._order = '';
+			else:
+				self._order = "order by %s"%(way);
+
+		except Exception as e:
+			print('order',e);
+			pass
+		return self;
+
+	def limit(self,startstop=''):
+		try:
+			startstop = startstop.split(',');
+			if len(startstop) == 1 and startstop[0].isnumeric():
+				self._limit = "limit "+str(startstop[0]);
+			elif len(startstop) > 1 and startstop[0].isnumeric() and startstop[1].isnumeric():
+				self._limit = "limit %s,%s"%(str(startstop[0]),startstop[1]);
+			else:
+				self._limit = '';
+
+		except Exception as e:
+			pass
+		return self;
+
+
+	def count(self):
+		try:
+
+			#获取where
+			where = self._where;
+			self.sql = sql = "select count(1) from %s %s"%(self._table,where);
+			self.cursor.execute(sql);
+			count = self.cursor.fetchone()[0];
+			return count;
+		except Exception as e:
+			print('count',e);
+
+
 
 	def select(self):
-		return ('select');
+		try:
+			where = self._where;
+			order = self._order;
+			limit = self._limit;
+			fields = self._fields_;
+			self.sql = sql = "select %s from %s %s %s %s"%(fields,self._table,where,order,limit);
+			self.cursor.execute(sql);
+			data = self.cursor.fetchall();
+			if not data:
+				return [];
+			#转换数据
+			datas = [];
+			for row in data:
+				datas.append(self.conversionData(row));
+			return datas;
+
+		except Exception as e:
+			pass
+
 
 	def __del__(self):
 		self.cursor.close();
 		self.connect.close();
 
 
+m = Model(passwd="123456",database='message',host="127.0.0.1");
+######增
+#单条
+data = {'mobile':'13539993040','num':1000,'msg':'ok'};
+m.table('data').insert(data);#返回插入的主键
+#多条
+data = [{'mobile':'13539993040','num':1000,'msg':'ok'},{'mobile':'13539993040','num':1000,'msg':'ok'}];
+m.table('data').insert(data);#返回插入的主键list
 
-print(Model().table('linfei_images').where('id=9').update({'name':'ffff','description':'hehehe','ffff':'vvv'}))
+#删 成功返回影响行数 失败返回False
+m.table('data').delete(1);#删除主键等于1的
+m.table('data').delete('id=1');#删除id等于1的
+m.table('data').where('id=1').delete();
 
+#改 成功返回影响行数 失败返回False
+data = {'mobile':'13539993040','num':10000,'msg':'修改'};
+m.table('data').where('id=1').update(data);
 
-
+#查
+m.table('data').find();#查询一条
+m.table('data').where('id=1').find();#按条件查询一条
+m.table('data').where('name=zhoufei').order('id desc').find();#按条件查询一条
+m.table('data').select();#查询多条
+m.table('data').where('id=1').select();#按条件查询多条
+m.table('data').where('name=zhoufei').order('id desc').select();#按条件查询多条
+m.table('data').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
+m.table('data').fields('id,name').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
+m.table('data').where('name=zhoufei').count();#查询满足条件的条数
