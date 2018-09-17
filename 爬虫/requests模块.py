@@ -53,7 +53,7 @@ headers = {
 
 #post
 # data = {'name':'germey','age':22}
-# response = requests.post('http://www.httpbin.org/post',params=data,headers=headers)
+# response = requests.post('http://www.httpbin.org/post',data=data,headers=headers)
 # print('返回的history',response.history)
 
 

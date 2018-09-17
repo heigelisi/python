@@ -55,7 +55,7 @@ class Model(object):
 				self._fields.append(f[0]);
 				self.comment.append(f[1]);
 				self.column_key.append(f[2]);
-
+			self._fields_ = ','.join(self._fields);
 		except Exception as e:
 			print(__file__,str(sys._getframe().f_lineno)+'行','table方法:',e);
 			exit();
@@ -85,7 +85,7 @@ class Model(object):
 				for r in row_:
 					#如果数据中不存在此字段去除
 					if r in self._fields:
-						rowdata[r] = str(row.get(r));
+						rowdata[r] = str(row.get(r).replace("'",'"'));
 				data.append(rowdata);
 
 			return data;
@@ -253,8 +253,8 @@ class Model(object):
 
 			#获取要查询的字段
 			fields = self._fields_;
-			if fields == None:
-				fields = "*";
+			if not fields:
+				fields = ','.join(self._fields);
 
 			#组建sql
 			self.sql = sql = "select %s from %s %s %s limit 1"%(fields,self._table,where,order);
@@ -342,31 +342,31 @@ class Model(object):
 		self.connect.close();
 
 
-m = Model(passwd="123456",database='message',host="127.0.0.1");
+# m = Model(passwd="123456",database='message',host="127.0.0.1");
 ######增
 #单条
-data = {'mobile':'13539993040','num':1000,'msg':'ok'};
-m.table('data').insert(data);#返回插入的主键
+	# data = {'mobile':'13539993040','num':1000,'msg':'ok'};
+	# m.table('data').insert(data);#返回插入的主键
 #多条
-data = [{'mobile':'13539993040','num':1000,'msg':'ok'},{'mobile':'13539993040','num':1000,'msg':'ok'}];
-m.table('data').insert(data);#返回插入的主键list
+	# data = [{'mobile':'13539993040','num':1000,'msg':'ok'},{'mobile':'13539993040','num':1000,'msg':'ok'}];
+	# m.table('data').insert(data);#返回插入的主键list
 
 #删 成功返回影响行数 失败返回False
-m.table('data').delete(1);#删除主键等于1的
-m.table('data').delete('id=1');#删除id等于1的
-m.table('data').where('id=1').delete();
+	# m.table('data').delete(1);#删除主键等于1的
+	# m.table('data').delete('id=1');#删除id等于1的
+	# m.table('data').where('id=1').delete();
 
 #改 成功返回影响行数 失败返回False
-data = {'mobile':'13539993040','num':10000,'msg':'修改'};
-m.table('data').where('id=1').update(data);
+	# data = {'mobile':'13539993040','num':10000,'msg':'修改'};
+	# m.table('data').where('id=1').update(data);
 
 #查
-m.table('data').find();#查询一条
-m.table('data').where('id=1').find();#按条件查询一条
-m.table('data').where('name=zhoufei').order('id desc').find();#按条件查询一条
-m.table('data').select();#查询多条
-m.table('data').where('id=1').select();#按条件查询多条
-m.table('data').where('name=zhoufei').order('id desc').select();#按条件查询多条
-m.table('data').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
-m.table('data').fields('id,name').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
-m.table('data').where('name=zhoufei').count();#查询满足条件的条数
+	# m.table('data').find();#查询一条
+	# m.table('data').where('id=1').find();#按条件查询一条
+	# m.table('data').where('name=zhoufei').order('id desc').find();#按条件查询一条
+	# m.table('data').select();#查询多条
+	# m.table('data').where('id=1').select();#按条件查询多条
+	# m.table('data').where('name=zhoufei').order('id desc').select();#按条件查询多条
+	# m.table('data').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
+	# m.table('data').fields('id,name').where('name=zhoufei').order('id desc').limit('1,5').select();#按条件查询多条分页
+	# m.table('data').where('name=zhoufei').count();#查询满足条件的条数
