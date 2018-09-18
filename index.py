@@ -362,6 +362,8 @@ x in s #测试 x 是否是 s 的成员
 x not in s #测试 x 是否不是 s 的成员
 
 
+path = os.path.split(os.path.realpath(__file__))[0];#获取当前文件路径
+
 文件处理
 1.mkdir( path [,mode] )  只创建一个目录，上层目录没有就抛出错误
       作用：创建一个目录，可以是相对或者绝对路径，mode的默认模式是0777。 
