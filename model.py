@@ -85,7 +85,7 @@ class Model(object):
 				for r in row_:
 					#如果数据中不存在此字段去除
 					if r in self._fields:
-						rowdata[r] = str(row.get(r).replace("'",'"'));
+						rowdata[r] = str(row.get(r)).replace("'",'"');
 				data.append(rowdata);
 
 			return data;

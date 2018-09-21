@@ -36,6 +36,18 @@ import requests
 	# f.write(response.content)
 	# f.close()
 
+#下载大文件
+html = requests.get('http://www.heigrace.com/act/PCMarketing/PCheigrace4/pc.zip',headers=headers,stream=True);
+with open(path+'/pcc.zip','wb') as f:
+	# f.wirte(html.content);
+	for chunk in html.iter_content(chunk_size=512):
+		print('正在下载...');
+		if chunk:
+			f.write(chunk);
+print('下载完成')
+
+
+
 allow_redirects=False #关闭默认跳转
 html = requests.get('http://www.baidu.com',allow_redirects=False,headers=headers,proxies=proxies,timeout=10)
 
