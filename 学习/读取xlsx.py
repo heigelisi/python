@@ -1,3 +1,8 @@
+#如果读取时报错xlrd.compdoc.CompDocError: Workbook corruption: seen[3] == 4
+解决办法是打开第三方库xlrd/compdoc.py 注释掉426行位置抛出的异常
+
+
+
 # 读写2003 excel
 import xlrd
 import xlwt
