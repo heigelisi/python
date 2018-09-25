@@ -15,3 +15,10 @@ def date(format_="%Y-%m-%d %H:%M:%S",timestamp=0):
 def md5(str):
 	import hashlib
 	return hashlib.md5(str.encode('utf-8')).hexdigest();
+
+
+def printerr(e):
+	"""打印异常"""
+	print('发生错误的文件：', e.__traceback__.tb_frame.f_globals['__file__']);
+	print('错误所在的行号：', e.__traceback__.tb_lineno);
+	print('错误信息', e);

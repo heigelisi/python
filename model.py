@@ -337,12 +337,36 @@ class Model(object):
 			pass
 
 
+	def value(self,val):
+		try:
+			val = val.strip();
+			if not val or val not in self._fields:
+				print(val,'字段不存在');
+				exit();
+			where = self._where;
+			order = self._order;
+			sql = "select %s from %s %s %s limit 1"%(val,self._table,where,order);
+			self.cursor.execute(sql);
+			data = self.cursor.fetchone();
+			if data:
+				return list(self.conversionData(data).values())[0];
+			return None;
+
+		except Exception as e:
+			print('val',e);
+
+
+	def close(slef):
+		self.cursor.close();
+		self.connect.close();
+
 	def __del__(self):
 		self.cursor.close();
 		self.connect.close();
 
 
 # m = Model(passwd="123456",database='message',host="127.0.0.1");
+# print(m.table('data').where('id=10').value('mobile'));
 ######增
 #单条
 	# data = {'mobile':'13539993040','num':1000,'msg':'ok'};

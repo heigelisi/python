@@ -464,3 +464,11 @@ c = (i * 2 for i in range(10))
 
 import base64
 encode = base64.b64encode(b'I love you')  
+
+
+try:
+	ddd
+except Exception as e:
+	print('发生错误的文件：', e.__traceback__.tb_frame.f_globals['__file__'])
+	print('错误所在的行号：', e.__traceback__.tb_lineno)
+	print('错误信息', e)

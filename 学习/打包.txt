@@ -1,0 +1,36 @@
+
+#打包成 .exe
+# pyinstaller -F ss.py
+# 打包不显示doc窗口  --noconsole
+
+# 生成单个pyc文件
+# 对于py文件，可以执行下面命令来生成pyc文件。
+
+# python -m foo.py
+# 另外一种方式是通过代码来生成pyc文件。
+
+# import py_compile
+# py_compile.compile('/path/to/foo.py')
+# 批量生成pyc文件
+# 针对一个目录下所有的py文件进行编译。python提供了一个模块叫compileall，具体请看下面代码：
+
+
+-F, –onefile	产生一个文件用于部署 (参见XXXXX).
+-D, –onedir	产生一个目录用于部署 (默认)
+-K, –tk	在部署时包含 TCL/TK
+-a, –ascii	不包含编码.在支持Unicode的python版本上默认包含所有的编码.
+-d, –debug	产生debug版本的可执行文件
+-w,–windowed,–noconsole	使用Windows子系统执行.当程序启动的时候不会打开命令行(只对Windows有效)
+-c,–nowindowed,–console	使用控制台子系统执行(默认)(只对Windows有效)
+-s,–strip	可执行文件和共享库将run through strip.注意Cygwin的strip往往使普通的win32 Dll无法使用.
+-X, –upx	如果有UPX安装(执行Configure.py时检测),会压缩执行文件(Windows系统中的DLL也会)(参见note)
+-o DIR, –out=DIR	指定spec文件的生成目录,如果没有指定,而且当前目录是PyInstaller的根目录,会自动创建一个用于输出(spec和生成的可执行文件)的目录.如果没有指定,而当前目录不是PyInstaller的根目录,则会输出到当前的目录下.
+-p DIR, –path=DIR	设置导入路径(和使用PYTHONPATH效果相似).可以用路径分割符(Windows使用分号,Linux使用冒号)分割,指定多个目录.也可以使用多个-p参数来设置多个导入路径
+–i con=<FILE.ICO>	将file.ico添加为可执行文件的资源(只对Windows系统有效)
+–i con=<FILE.EXE,N>	将file.exe的第n个图标添加为可执行文件的资源(只对Windows系统有效)
+-v FILE, –version=FILE	将verfile作为可执行文件的版本资源(只对Windows系统有效)
+-n NAME, –name=NAME	可选的项目(产生的spec的)名字.如果省略,第一个脚本的主文件名将作为spec的名字
+
+---------------------
+
+本文来自 jirryzhang 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/jirryzhang/article/details/78881512?utm_source=copy 
