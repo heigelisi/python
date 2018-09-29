@@ -1,11 +1,16 @@
 from snownlp import SnowNLP
 # 转化为拼音
-s = SnowNLP("杭州西湖风景很好，是旅游胜地！")
-py = s.pinyin
+s = SnowNLP("人们学习一项技能的最终指向几乎都是就业，当前我国对技能型人才的需求量是很大的，国家政策也非常扶持职业技术教育，比如健身教练培训就是其中之一，而且健身行业发展迅速，为准健身教练们提供了非常多的就业机会，可以说，学健身教练好就业。首先，健身行业处于高速发展阶段，健身房和健身会所的数量和规模都在扩大，呈现从一线城市向二三线城市扩展的趋势，而且现在二三线城市里初具规模的健身房和健身会所也不在少数，行业用人需求明显。")
+print(s.pinyin);
+print(s.words);
+print(s.tags);
+print(s.sentiments);
+print(s.keywords(10));
+print(s.summary(3))
 
-print(py)
+# print(py)
 print()
-
+exit()
 
 # 繁体转为简体
 s = SnowNLP(u'「繁體字」「繁體中文」的叫法在臺灣亦很常見。')

@@ -22,3 +22,14 @@ def printerr(e):
 	print('发生错误的文件：', e.__traceback__.tb_frame.f_globals['__file__']);
 	print('错误所在的行号：', e.__traceback__.tb_lineno);
 	print('错误信息', e);
+
+
+def setEnviron(path=None):
+	"""设置环境变量"""
+	import os;
+	if not path:
+		path = os.path.split(os.path.realpath(__file__))[0];#获取当前文件路径
+	mydir = os.path.normpath(path);
+	os.environ["PHANTOMJS"] = mydir;
+	pathV = os.environ["PATH"];
+	os.environ["PATH"]= mydir + ";" + os.environ["PATH"];
