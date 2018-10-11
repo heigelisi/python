@@ -232,15 +232,18 @@ class Model(object):
 		try:
 			if not data:
 				return None;
+			data = list(data);
+			keydata = list(range(len(data)));
+			data = dict(zip(keydata,data));
 			#获取查询的字段
 			fields = self._fields_.split(',');
 			data_ = {};
-			for i in data:
-				data_[fields[data.index(i)]] = i;
-			
+			for i in data.keys():
+				data_[fields[i]] = data[i];
+
 			return data_;
 		except Exception as e:
-			pass
+			print(e)
 
 	def find(self):
 		"""查询一条数据"""
