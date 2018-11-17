@@ -82,3 +82,4 @@ whereis python3
 https://www.anaconda.com/download/
 ln -s /anaconda3/bin/python3 /usr/bin/python3
 ln -s /anaconda3/bin/pip /usr/bin/pip3
+https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh

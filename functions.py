@@ -127,3 +127,26 @@ def setEnviron(path=None):
 	os.environ["PHANTOMJS"] = mydir;
 	pathV = os.environ["PATH"];
 	os.environ["PATH"]= mydir + ";" + os.environ["PATH"];
+
+
+
+
+
+#加载ini配置文件
+def loadCnf(path):
+	config = {};
+	with open(path,'r',encoding='utf8') as f:
+		for r in f:
+			row = r.strip();
+			if not row:
+				continue;
+			if row[0] == "#":
+				continue;
+			if row[0] == '[' and row[-1] == ']':
+				#配置标识
+				cname = row[1:-1];
+				config[cname] = {};
+			key_val = row.split('=',1);
+			if len(key_val) > 1:
+				config[cname][key_val[0].strip()] = key_val[1].strip() or '';
+	return config;
