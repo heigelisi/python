@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 #语言
 LANGUAGE_CODE = 'zh_hans'
 #时区
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -127,3 +127,40 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 #静态文件夹
 STATIC_URL = '/static/'
+
+# session存储的相关配置
+#session数据库配置（默认）
+# Django默认支持Session，并且默认是将Session数据存储在数据库中，即：django_session 表中。
+ SESSION_ENGINE = 'django.contrib.sessions.backends.db' # 引擎（默认）
+ SESSION_COOKIE_NAME ＝ "sessionid"   # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+ SESSION_COOKIE_PATH ＝ "/"    # Session的cookie保存的路径（默认）
+ SESSION_COOKIE_DOMAIN = None    # Session的cookie保存的域名（默认）
+ SESSION_COOKIE_SECURE = False    # 是否Https传输cookie（默认）
+ SESSION_COOKIE_HTTPONLY = True    # 是否Session的cookie只支持http传输（默认）
+ SESSION_COOKIE_AGE = 1209600    # Session的cookie失效日期（2周）（默认）
+ SESSION_EXPIRE_AT_BROWSER_CLOSE = False   # 是否关闭浏览器使得Session过期（默认）
+ SESSION_SAVE_EVERY_REQUEST = False   # 是否每次请求都保存Session，默认修改之后才保存（默认）
+
+# session缓存配置
+ SESSION_ENGINE = 'django.contrib.sessions.backends.cache' # 引擎
+ SESSION_CACHE_ALIAS = 'default'    # 使用的缓存别名（默认内存缓存，也可以是memcache），此处别名依赖缓存的设置
+ SESSION_COOKIE_NAME ＝ "sessionid"   # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
+ SESSION_COOKIE_PATH ＝ "/"    # Session的cookie保存的路径
+ SESSION_COOKIE_DOMAIN = None    # Session的cookie保存的域名
+ SESSION_COOKIE_SECURE = False    # 是否Https传输cookie
+ SESSION_COOKIE_HTTPONLY = True    # 是否Session的cookie只支持http传输
+ SESSION_COOKIE_AGE = 1209600    # Session的cookie失效日期（2周）
+ SESSION_EXPIRE_AT_BROWSER_CLOSE = False   # 是否关闭浏览器使得Session过期
+ SESSION_SAVE_EVERY_REQUEST = False   # 是否每次请求都保存Session，默认修改之后才保存
+
+#session文件配置
+ SESSION_ENGINE = 'django.contrib.sessions.backends.file' # 引擎
+ SESSION_FILE_PATH = None     # 缓存文件路径，如果为None，则使用tempfile模块获取一个临时地址tempfile.gettempdir() 
+ SESSION_COOKIE_NAME ＝ "sessionid"    # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
+ SESSION_COOKIE_PATH ＝ "/"     # Session的cookie保存的路径
+ SESSION_COOKIE_DOMAIN = None    # Session的cookie保存的域名
+ SESSION_COOKIE_SECURE = False    # 是否Https传输cookie
+ SESSION_COOKIE_HTTPONLY = True    # 是否Session的cookie只支持http传输
+ SESSION_COOKIE_AGE = 1209600    # Session的cookie失效日期（2周）
+ SESSION_EXPIRE_AT_BROWSER_CLOSE = False   # 是否关闭浏览器使得Session过期
+ SESSION_SAVE_EVERY_REQUEST = False    # 是否每次请求都保存Session，默认修改之后才保存
