@@ -22,7 +22,7 @@ class Model(object):
 	def __init__(self,host=host,user=user,passwd=passwd,database=database,port=port,charset=charset,prefix=prefix):
 		"""初始化配置"""
 		try:
-
+			self._startTrans = False#事务
 			#链接信息
 			self.host=host
 			self.user=user
@@ -56,12 +56,43 @@ class Model(object):
 		except Exception as e:
 			self.error(e)
 
+	def startTrans(self):
+		"""开启事务"""
+		self._startTrans = True
+
+	def commit(self):
+		"""提交事务"""
+		try:
+			self.connect.commit()
+			self._startTrans = False
+		except Exception as e:
+			self.error(e)
+
+	def rollback(self):
+		"""回滚事务"""
+		try:
+			self.connect.rollback()
+			self._startTrans = False
+		except Exception as e:
+			self.error(e)		
+
 	def execute(self,sql=''):
 		"""执行sql"""
 		try:
 			sql = sql or self.sql
 			res = self.cursor.execute(sql)
-			return res
+			if res:
+				if not self._startTrans:
+					self.connect.commit()
+				insertid = self.cursor.lastrowid
+				if insertid:
+					return insertid
+					# rollback
+				else:
+					return True
+			else:
+				self.connect.rollback()
+				return False
 		except Exception as e:
 			self.error(e)
 
@@ -77,7 +108,6 @@ class Model(object):
 			self._group_ = ''#group条件
 			self._limit_ = ''#limit条件
 			self.sql = ''#sql语句
-			self._fields_ = '*'#fields方法传入的字段信息初始化
 			self._fetchSQL_ = False
 			#表信息
 			self._tbname = self.prefix+tbname
@@ -95,6 +125,7 @@ class Model(object):
 				index = row[2]#索引
 				self._index.append(index)
 
+			self._fields_ = '`'+'`,`'.join(self._fields)+'`'#fields方法传入的字段信息初始化
 
 		except Exception as e:
 			self.error(e)
@@ -114,11 +145,19 @@ class Model(object):
 	def field(self,fileds=''):
 		"""要查询的字段"""
 		try:
-			filed = fileds.strip()
+			fileds = fileds.strip()
+			filedlist = []
 			if fileds:
-				fileds = self.filterField(fileds)#过滤非法字段
+				# fileds = self.filterField(fileds)#过滤非法字段
+				fileds = fileds.split(',')
+				for filed in fileds:
+					if filed in self._fields_:
+						filedlist.append('`'+filed+'`')
+					else:
+						
+						filedlist.append(filed)
 				if fileds:
-					self._fields_ = '`'+'`,`'.join(fileds)+'`'
+					self._fields_ = ','.join(filedlist)
 		except Exception as e:
 			self.error(e)
 		return self
@@ -201,6 +240,16 @@ class Model(object):
 			self.error(e)
 		return self
 
+	def group(self,groupby):
+		try:
+			groupbylist = groupby.split()
+			if groupbylist[0] not in self._fields:
+				return self
+			self._group_ = " GROUP BY "+groupby.strip()
+		except Exception as e:
+			self.error(e)
+		return self
+
 	def limit(self,limit_):
 		try:
 			if type([]) == type(limit_):
@@ -221,9 +270,15 @@ class Model(object):
 			data = dict(zip(keydata,data))
 			#获取查询的字段
 			fields = self._fields_.split(',')
+			fieldslist = []
+			for field in fields:
+				filed_list = field.split(' as ')
+				if len(filed_list) == 2:
+					field = filed_list[1]
+				fieldslist.append(field)
 			data_ = {}
 			for i in data.keys():
-				fields_ = fields[i].strip('`')
+				fields_ = fieldslist[i].strip('`')
 				data_[fields_] = data[i]
 
 			return data_
@@ -241,7 +296,7 @@ class Model(object):
 	def select(self):
 		"""查询全部"""
 		try:
-			self.sql = "SELECT {0} FROM {1}{2}{3}{4}".format(self._fields_,self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT {0} FROM {1}{2}{3}{4}{5}".format(self._fields_,self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			datas = []
 			data = self.query()
@@ -255,7 +310,7 @@ class Model(object):
 	def find(self):
 		"""查询单条记录"""
 		try:
-			self.sql = "SELECT {0} FROM {1}{2}{3} limit 1".format(self._fields_,self._tbname,self._where,self._order_)
+			self.sql = "SELECT {0} FROM {1}{2}{3}{4} limit 1".format(self._fields_,self._tbname,self._where,self._group_,self._order_)
 			self.printSQL() 
 			data = self.query()
 			if data:
@@ -267,7 +322,7 @@ class Model(object):
 
 	def value(self,filed):
 		try:
-			self.sql = "SELECT {0} FROM {1}{2}{3} limit 1".format(filed,self._tbname,self._where,self._order_)
+			self.sql = "SELECT {0} FROM {1}{2}{3}{4} limit 1".format(filed,self._tbname,self._where,self._group_,self._order_)
 			self.printSQL() 
 			data = self.query()
 			if data:
@@ -280,7 +335,7 @@ class Model(object):
 
 	def count(self):
 		try:
-			self.sql = "SELECT count(1) FROM {0}{1}{2}{3}".format(self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT count(1) FROM {0}{1}{2}{3}{4}".format(self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			data = self.query()
 			if data:
@@ -293,7 +348,7 @@ class Model(object):
 
 	def max(self,filed):
 		try:
-			self.sql = "SELECT max({0}) FROM {1}{2}{3}{4}".format(filed,self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT max({0}) FROM {1}{2}{3}{4}{5}".format(filed,self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			data = self.query()
 			if data:
@@ -305,7 +360,7 @@ class Model(object):
 
 	def min(self,filed):
 		try:
-			self.sql = "SELECT min({0}) FROM {1}{2}{3}{4}".format(filed,self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT min({0}) FROM {1}{2}{3}{4}{5}".format(filed,self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			data = self.query()
 			if data:
@@ -317,7 +372,7 @@ class Model(object):
 
 	def avg(self,filed):
 		try:
-			self.sql = "SELECT avg({0}) FROM {1}{2}{3}{4}".format(filed,self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT avg({0}) FROM {1}{2}{3}{4}{5}".format(filed,self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			data = self.query()
 			if data:
@@ -329,7 +384,7 @@ class Model(object):
 
 	def sum(self,filed):
 		try:
-			self.sql = "SELECT sum({0}) FROM {1}{2}{3}{4}".format(filed,self._tbname,self._where,self._order_,self._limit_)
+			self.sql = "SELECT sum({0}) FROM {1}{2}{3}{4}{5}".format(filed,self._tbname,self._where,self._group_,self._order_,self._limit_)
 			self.printSQL()
 			data = self.query()
 			if data:
@@ -373,17 +428,8 @@ class Model(object):
 			value = ','.join(valuelist)
 			self.sql = "INSERT INTO {0}({1}) VALUES{2}".format(self._tbname,fileds,value)
 			self.printSQL()
-			res = self.execute()
-			if res:
-				print(self._index)
-				self.connect.commit()
-				if 'PRI' in self._index:
-					return self.cursor.lastrowid
-				else:
-					return True
-			else:
-				self.connect.rollback()
-				return False
+			return self.execute()
+
 		except Exception as e:
 			self.error(e)
 
@@ -402,13 +448,7 @@ class Model(object):
 			value = ','.join(values)
 			self.sql = "UPDATE `{0}` SET {1}{2}".format(self._tbname,value,self._where)
 			self.printSQL()
-			res = self.execute()
-			if res:
-				self.connect.commit()
-				return True;
-			else:
-				self.connect.rollback()
-				return False
+			return self.execute()
 
 		except Exception as e:
 			self.error(e)
@@ -417,13 +457,7 @@ class Model(object):
 		try:
 			self.sql = "DELETE FROM {0}{1}".format(self._tbname,self._where)
 			self.printSQL()
-			res = self.execute()
-			if res:
-				self.connect.commit()
-				return True
-			else:
-				self.connect.rollback()
-				return False
+			return self.execute()
 
 		except Exception as e:
 			self.error(e)
@@ -435,12 +469,4 @@ class Model(object):
 		except Exception as e:
 			self.error(e)
 
-model = Model()
-# print(model.table('admin').field('id,name').where(['name&pwd','like','ffff']).connection("OR").where(['id','=',2]).order('id desc').limit([0,20]).fetchSQL(0).select())
-data = [
-	{'session_key':'sssss3','session_data':'123456','expire_datef':'ssss'},
-	{'session_key':'sssss4','session_data':'123456','expire_datef':'ssss'}
-]
-# print(model.table('session').fetchSQL(1).where(['session_key|session_data','=','fff']).connection('or').where(['session_key','=','ffff']).update({'session_key':'sssss3','session_data':'123456','expire_datef':'ssss'}))
-# print(model.table('test').fetchSQL(1).where(['id','=',1]).connection('or').where(['id','=','3']).update({'account':'aaaaffffff','password':'123456','expire_datef':'ssss'}))
-print(model.table('test').where('id=1').delete())
+
