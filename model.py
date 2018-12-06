@@ -1,10 +1,9 @@
 
-
 import os,sys,time,datetime,pymysql;
 host = "localhost";
 user = "root";
-passwd = "";
-database = "mobile";
+passwd = "123456f";
+database = "test";
 port = 3306;
 charset = 'utf8';
 class Model(object):
@@ -364,8 +363,11 @@ class Model(object):
 		self.connect.close();
 
 	def __del__(self):
-		self.cursor.close();
-		self.connect.close();
+		try:
+			self.cursor.close();
+			self.connect.close();
+		except Exception as e:
+			pass
 
 
 # m = Model(passwd="123456",database='message',host="127.0.0.1");

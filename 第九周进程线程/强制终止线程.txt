@@ -1,0 +1,21 @@
+#强制终止线程
+import inspect
+import ctypes
+class exit_threading(object):
+	def _async_raise(self,tid, exctype):
+	   """raises the exception, performs cleanup if needed"""
+	   tid = ctypes.c_long(tid)
+	   if not inspect.isclass(exctype):
+	      exctype = type(exctype)
+	   res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, ctypes.py_object(exctype))
+	   if res == 0:
+	      raise ValueError("invalid thread id")
+	   elif res != 1:
+	      ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
+	      raise SystemError("PyThreadState_SetAsyncExc failed")
+
+	def stop_thread(self,thread):
+	   self._async_raise(thread.ident, SystemExit)
+w = threading.Thread(target=httpd.serve_forever,args=());
+w.start();
+exit_threading().stop_thread(w)
