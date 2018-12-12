@@ -191,6 +191,7 @@ s.startswith('www');#判断是否已某字符开头
 s.endswith('.com');#判断是否已某字符结尾
 s.isalpha();#判读是否是字母
 s.isnumeric();#判读是否是数字
+isinstance(value,int) #类型判断 isinstance(1,int)判断1是否是整型
 s.split('.');#以某个字符拆分字符串 返回列表
 ':'.join(lst);#以某个字符连接列表的值
 #格式化字符串

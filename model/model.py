@@ -179,16 +179,16 @@ class Model(object):
 			len_ = len(conditions)
 			if len_ == 1:
 				where_ = conditions[0]
-				if type('') == type(where_):
+				if isinstance(where_,str):
 					self._where_.append(where_)
 					# where('id=2')
 
-				elif type([]) == type(where_):
+				elif isinstance(where_,list):
 					if len(where_) < 3:
 						return self
 					#处理val
 					value = where_[2]
-					if type(()) == type(value):
+					if isinstance(where_,tuple):
 						value = str(value)
 					else:
 						value = "'"+str(value)+"'"
@@ -205,7 +205,7 @@ class Model(object):
 					if '&' in filed:
 						connection = " AND "
 						fileds = filed.split('&')
-					if len(fileds) > 1 and type([]) == type(fileds):
+					if len(fileds) > 1 and isinstance(fileds,list):
 						for row in fileds:
 							WHERE.append('`'+row+'` '+where_[1]+" "+str(value)+"")
 					else:
@@ -252,7 +252,7 @@ class Model(object):
 
 	def limit(self,limit_):
 		try:
-			if type([]) == type(limit_):
+			if isinstance(limit_,list):
 				self._limit_ = " limit {0},{1}".format(limit_[0],limit_[1])
 			else:
 				self._limit_ = " limit "+str(limit_)
@@ -401,11 +401,11 @@ class Model(object):
 				return
 			datas_ = []
 			#处理key
-			if type({}) == type(datas):
+			if isinstance(datas,dict):
 				fileds = ','.join(datas.keys())
 				datas_.append(datas)
 
-			elif type([]) == type(datas):
+			elif isinstance(datas,list):
 				fileds = ','.join(datas[0].keys())
 				datas_ = datas
 
