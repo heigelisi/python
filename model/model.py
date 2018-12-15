@@ -333,6 +333,33 @@ class Model(object):
 		except Exception as e:
 			self.error(e)
 
+	def column(self,filed=''):
+		try:
+			if not filed:
+				self._fields_ = self._fields[0]
+			else:
+				filed = filed.split(',')
+				self._fields_ = '`'+'`,`'.join(filed)+'`'
+			self.sql = "SELECT {0} FROM {1}{2}{3}{4}{5}".format(self._fields_,self._tbname,self._where,self._group_,self._order_,self._limit_)
+			self.printSQL()
+			datas = {}
+			data = self.query()
+			if not data:
+				return {}
+			if len(filed) > 1:
+				for row in data:
+					key = row[0]
+					value = list(row)[1:]
+					if len(value) == 1:
+						value = value[0]
+					datas[key] = value
+
+		except Exception as e:
+			self.error(e)
+		
+		return datas
+
+
 
 	def count(self):
 		try:
