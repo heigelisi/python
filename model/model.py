@@ -10,7 +10,7 @@ prefix = ''#表前缀
 
 #用配置文件指定配置
 try:
-	from database import *#当前目录下的database.py
+	from .database import *#当前目录下的database.py
 except Exception as e:
 	pass
 
@@ -34,7 +34,8 @@ class Model(object):
 			self.connect = pymysql.connect(host=host,user=user,passwd=passwd,db=database,charset=charset,port=port);
 			self.cursor = self.connect.cursor()
 		except Exception as e:
-			pass
+			self.error(e)
+			exit()
 
 
 	def error(self,e):
@@ -322,7 +323,7 @@ class Model(object):
 
 	def value(self,filed):
 		try:
-			self.sql = "SELECT {0} FROM {1}{2}{3}{4} limit 1".format(filed,self._tbname,self._where,self._group_,self._order_)
+			self.sql = "SELECT `{0}` FROM {1}{2}{3}{4} limit 1".format(filed,self._tbname,self._where,self._group_,self._order_)
 			self.printSQL() 
 			data = self.query()
 			if data:
@@ -422,7 +423,8 @@ class Model(object):
 			for val in datas_:
 				values = []
 				for filed in fileds_:
-					values.append('"'+html.escape(val.get(filed))+'"')
+					value_ = str(val.get(filed))
+					values.append('"'+html.escape(value_)+'"')
 				valuelist.append('('+','.join(values)+')')
 			
 			value = ','.join(valuelist)
@@ -443,7 +445,7 @@ class Model(object):
 			import html
 			values = []
 			for filed in fileds_:
-				values.append('`'+filed+'`='+'"'+html.escape(data.get(filed))+'"')
+				values.append('`'+filed+'`='+'"'+html.escape(str(data.get(filed)))+'"')
 
 			value = ','.join(values)
 			self.sql = "UPDATE `{0}` SET {1}{2}".format(self._tbname,value,self._where)
