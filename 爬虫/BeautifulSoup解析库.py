@@ -1,7 +1,7 @@
 # pip install beautifulsoup4
 from bs4 import BeautifulSoup
 html = ''
-soup BeautifulSoup(html,'lxml')
+soup = BeautifulSoup(html,'lxml')
 print(soup.prettify())
 print(soup.title.string())
 

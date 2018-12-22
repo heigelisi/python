@@ -1,7 +1,12 @@
 from model import Model
 
+model1 = Model()
+data = model1.table('test').select()
+print(data)
+print(model1)
 
-model = Model()
-data = model.table('test').where('').field('').fetchSQL(1).group('account').order('id desc,account').select()
-for d in data:
-	print(d)
+
+model2 = Model()
+data2 = model1.table('session').select()
+print(data2)
+print(model2)
