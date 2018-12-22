@@ -21,11 +21,11 @@ class Model(object):
     new = False
     init = False
 
-    def __new__(self,*args,**wkargs):
-        if not self.new:
-            self.new = super().__new__(self)
+    def __new__(cls,*args,**wkargs):
+        if not cls.new:
+            cls.new = super().__new__(cls)
 
-        return self.new
+        return cls.new
 
 
 
