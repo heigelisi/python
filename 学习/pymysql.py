@@ -29,6 +29,7 @@ import hashlib;
 import time;
 connect = pymysql.connect(host='192.168.1.66',user='root',passwd='123',db='test',charset='utf8',port=3306);#链接数据库
 cursor = connect.cursor();#创建一个游标
+cursor = connect.cursor(cursor=pymysql.cursors.DictCursor)#创建一个游标 查询数据是返回字典
 # cursor.execute("set names 'utf8'");#设置字符集
 
 
