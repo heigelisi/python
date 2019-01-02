@@ -219,10 +219,17 @@ d.values();#返回所以的值
 for v in d.values():
 	print(v);
 	pass
+
+	
 d.items()#返回键值对
+#字典
 for (k,v) in d.items():
 	print('{}=>{}'.format(k,v))
 	pass
+
+#列表
+for k,v  in enumerate(l):
+	print(k,v)
 
 # 函数
 def test():
