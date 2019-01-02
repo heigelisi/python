@@ -1,0 +1,9 @@
+
+https://blog.csdn.net/leiting_imecas/article/details/52452121?utm_source=blogxgwz8
+
+
+http_server = tornado.httpserver.HTTPServer(app)
+http_server.listen(options.port)
+tornado.ioloop.PeriodicCallback(sendMsg, 2000).start()  # start scheduler 每隔2s执行一次f2s
+tornado.ioloop.IOLoop.current().start()
+tornado.ioloop.PeriodicCallback(sendMsg, 2000).start()  # start scheduler 每隔2s执行一次f2s
