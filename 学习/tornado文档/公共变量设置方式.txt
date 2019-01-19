@@ -1,0 +1,19 @@
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.items = ["Item 1", "Item 2", "Item 3"]
+        self.title = "My title"
+        self.render("template.html")
+Template:
+
+<html>
+    <head>
+        <title>{{ handler.title }}</title>
+    </head>
+    <body>
+        <ul>
+        {% for item in handler.items %}
+            <li>{{ escape(item) }}</li>
+        {% end %}
+        </ul>
+    </body>
+</html>

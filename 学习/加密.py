@@ -39,10 +39,7 @@ passwd = sha3_384.hexdigest()
 print(passwd)
 
 
-
-
-# 0a989ebc4a77b56a6e2bb7b19d995d185ce44090c13e2984b7ecc6d446d4b61ea9991b76a4c2f04b1b4d244841449454
-
+# 621226 2013016 988801
 
 exit()
 
