@@ -5,6 +5,7 @@ pymysql
     mysql+pymysql://<username>:<password>@<host>/<dbname>[?<options>]
   
 MySQL-Connector
+    pip install mysql-connector-python
     mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>
   
 cx_Oracle

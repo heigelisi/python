@@ -483,3 +483,11 @@ except Exception as e:
 	print('发生错误的文件：', e.__traceback__.tb_frame.f_globals['__file__'])
 	print('错误所在的行号：', e.__traceback__.tb_lineno)
 	print('错误信息', e)
+
+
+#json
+
+import json
+# dict 转json
+data = {"code":200,"msg":"呵哈"}
+print(json.dumps(data,index=2,ensure_ascii=False))#index=2缩进 ensure_ascii=False不转义中文
