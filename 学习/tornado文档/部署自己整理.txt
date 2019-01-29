@@ -1,0 +1,69 @@
+
+#安装 supervisor --目前不支持python3,所以这里只能用pip2安装
+    pip2 install supervisor
+
+
+#运行echo_supervisord_conf命令输出默认的配置项，可以如下操作将默认配置保存到文件中
+    echo_supervisord_conf > supervisord.conf
+
+#修改supervisord.conf
+    [include]
+    files = relative/directory/*.ini
+    改成
+    [include]
+    files = /etc/supervisor/*.conf
+
+#把修改后的 supervisord.conf 复制到 /etc
+    cp -r supervisord.conf /etc/
+
+#创建存放 torando 的配置文件目录
+    mkdir /etc/supervisor
+
+
+#在/etc/supervisor 创建tornado的配置文件
+
+    vim /etc/supervisor/tornado.conf
+
+
+
+#tornado.conf文件中的内容如下
+
+
+[group:tornadoes]
+programs=tornado-8000,tornado-8001,tornado-8002,tornado-8003
+
+[program:tornado-8000]
+command=/home/python/.virtualenvs/tornado_py2/bin/python /home/python/Documents/demo/chat/server.py --port=8000 ;启动命令
+directory=/home/python/Documents/demo/chat ;tornado server位置
+user=python ;启动的用户
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/home/python/tornado.log ;日志位置
+loglevel=info
+
+[program:tornado-8001]
+command=/home/python/.virtualenvs/tornado_py2/bin/python /home/python/Documents/demo/chat/server.py --port=8001
+directory=/home/python/Documents/demo/chat
+user=python
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/home/python/tornado.log
+loglevel=info
+
+[program:tornado-8002]
+command=/home/python/.virtualenvs/tornado_py2/bin/python /home/python/Documents/demo/chat/server.py --port=8002
+directory=/home/python/Documents/demo/chat
+user=python
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/home/python/tornado.log
+loglevel=info
+
+[program:tornado-8003]
+command=/home/python/.virtualenvs/tornado_py2/bin/python /home/python/Documents/demo/chat/server.py --port=8003
+directory=/home/python/Documents/demo/chat
+user=python
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/home/python/tornado.log
+loglevel=info
