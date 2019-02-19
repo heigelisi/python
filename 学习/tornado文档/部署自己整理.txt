@@ -67,3 +67,9 @@ autorestart=true
 redirect_stderr=true
 stdout_logfile=/home/python/tornado.log
 loglevel=info
+
+
+
+#启动
+
+supervisord -c /etc/supervisord.conf

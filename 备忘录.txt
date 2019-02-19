@@ -1,1 +1,13 @@
 SQLAlchemy
+
+
+Scrapy
+Pyspider
+
+
+numpy
+pandas
+sklearn
+
+Typora  #文档编写工具
+https://github.com/Molunerfinn/PicGo/releases/tag/v2.0.3 #配合工具上传远程图片工具

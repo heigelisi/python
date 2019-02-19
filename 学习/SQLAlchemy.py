@@ -77,6 +77,7 @@ Session = sessionmaker(twophase=True)
 Session.configure(bind=engine)
 session = Session()
 User = Users(name='周飞',sex=1,age=18)
+User.lastrowid
 session.add(User)
 session.commit()
 
