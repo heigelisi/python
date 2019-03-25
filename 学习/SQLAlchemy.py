@@ -77,9 +77,12 @@ Session = sessionmaker(twophase=True)
 Session.configure(bind=engine)
 session = Session()
 User = Users(name='周飞',sex=1,age=18)
-User.lastrowid
 session.add(User)
 session.commit()
+uid = User.uid #获取自增id
+
+# 改
+session.query(Users).filter(Users.uid ==2).update({"userName":'fffff'})
 
 
 # https://www.cnblogs.com/pycode/p/mysql-orm.html

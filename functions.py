@@ -194,3 +194,32 @@ def circular(filepath):
 	alpha.paste(circle, (0, 0))
 	ima.putalpha(alpha)#给图片添加透明度
 	ima.save('test_circle.png')
+
+def cropImage(file,path,left,top,right,bottom):
+    """
+    图片裁切
+    file 要裁切的图片
+    path 要保存的路径
+
+    要裁切的边距离(图片左边到要裁切的位置)
+              top
+        *************
+        *     要    *
+        *     裁    *
+   left *     切    * right
+        *     的    *
+        *     位    *
+        *     置    *
+        *************
+            bottom
+    """
+    import imghdr #判断图片类型
+    from PIL import Image
+    import os,uuid
+    img = Image.open(file)
+    imgType = imghdr.what(file)
+    croping = img.crop((left,top,right,bottom))
+    if '.' not in path:
+        path = os.path.join(path,uuid.uuid4().hex+'.'+imgType)
+    croping.save(path)
+    return path

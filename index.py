@@ -73,7 +73,7 @@ round(3.54)#四舍五入 函数
 import math #导入模块
 math.floor(3.14);#向下取整
 math.trunc(-3.14);#往0
-margh.ceil(3.12);#向上取整
+math.ceil(3.12);#向上取整
 
 decimal #模块
 import decimal;

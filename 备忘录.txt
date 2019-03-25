@@ -11,3 +11,23 @@ sklearn
 
 Typora  #文档编写工具
 https://github.com/Molunerfinn/PicGo/releases/tag/v2.0.3 #配合工具上传远程图片工具
+
+
+apscheduler 定时任务
+https://apscheduler.readthedocs.io/en/v3.3.0/py-modindex.html
+https://www.jianshu.com/p/4f5305e220f0
+
+
+#爬虫智能解析 需要收费(注册后15天免费)
+diffbot
+ 官网地址： https://www.diffbot.com
+ PyPi    :  https://pypi.org/project/diffbot/
+
+
+
+mitmproxy
+https://yq.aliyun.com/articles/690254?spm=a2c4e.11155472.0.0.29a15f5aqUqIms
+
+
+
+https://www.w3cschool.cn/reqsgr/lesayozt.html  Docker
