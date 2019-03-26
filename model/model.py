@@ -10,6 +10,9 @@ class Error(Exception):
         return self.msg+':'+repr(self.e)
 
 class Model(object):
+    """
+    python3 pymysql 操作MySQL数据库
+    """
     config = {
     "host":'localhost',
     "user":'root',
@@ -58,6 +61,21 @@ class Model(object):
         except Exception as e:
             raise Error(e,'查询错误sql:'+sql)
 
+    def __table_as(self,tableName):
+        """分离表面和别名"""
+        tableName = tableName
+        AS = tableName
+        if ' as ' in tableName:
+            table_as = tableName.split(' as ')
+            tableName = table_as[0].strip()
+            AS = table_as[1].strip()
+        elif ' AS ' in tableName:
+            table_as = tableName.split(' AS ')
+            tableName = table_as[0].strip()
+            AS = table_as[1].strip()
+        return [tableName,AS]
+        
+
     def table(self,tableName):
         """初始化表信息及查询条件"""
         try:
@@ -68,7 +86,9 @@ class Model(object):
             self.GROUPBY = '' #存储goup by 语句
             self.LIMIT = '' #存储limit 语句
             self.SQL = '' #完整SQL语句
-            self.tableName = self.config['prefix']+tableName #表面
+            tableName_as = self.__table_as(tableName)
+            self.AS = self.config['prefix']+tableName_as[1] #表别名
+            self.tableName = self.config['prefix']+tableName_as[0] #表明
             #查询表中的字段
             self.COLUMN_NAME = [] #字段
             self.COLUMN_COMMENT = [] #注释
@@ -102,7 +122,7 @@ class Model(object):
 
     def connection(self,CONNECTION="AND"):
         """修改连接符号"""
-        if CONNECTION.upper() == 'OR'
+        if CONNECTION.upper() == 'OR':
             self.CONNECTION == "OR"
 
     def where(self,conditions='',connection="AND"):
@@ -456,6 +476,37 @@ class Model(object):
         self.SQL = "DELETE FROM `{tableName}`{WHERE}".format(tableName=self.tableName,WHERE=self.WHERE)
         return self.execute()
 
+    def on(self,where):
+        """on条件"""
+        self.ON = where
+
+    def ljoin(self):
+        """left join"""
+
+    def rjoin(self):
+        """right join"""
+
+    def join(self,tableName):
+        """inner join"""
+        tableName_as = self.__table_as(tableName)
+        tableName = tableName_as[0]
+        AS = tableName_as[1]
+        self.SQL = "SELECT {FIELDS} FROM `{tableName}` AS {AS} INNER JOIN `{tableName2}` AS {AS2} ON {ON}{WHERE}{GROUPBY}{ORDERBY}{LIMIT}".format(
+            FIELDS=self.FIELDS,
+            tableName=self.tableName,
+            tableName2=tableName,
+            AS=self.AS,
+            AS2=AS,
+            ON=self.ON,
+            WHERE=self.WHERE,
+            GROUPBY=self.GROUPBY,
+            ORDERBY=self.ORDERBY,
+            LIMIT=self.LIMIT
+            )
+        # datas = self.query()
+        # return datas
+        print(self.SQL)
+
     def __del__(self):
         try:
             if self.config['printSql']:
@@ -465,4 +516,7 @@ class Model(object):
         except Exception as e:
             pass
 
+
+model = Model().table('column as c').join('article as a').on('a.cid = c.cid')
+print(model)
 
