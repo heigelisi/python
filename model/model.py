@@ -100,6 +100,11 @@ class Model(object):
                 self.FIELDS = '`'+'`,`'.join(fields_)+'`'
         return self
 
+    def connection(self,CONNECTION="AND"):
+        """修改连接符号"""
+        if CONNECTION.upper() == 'OR'
+            self.CONNECTION == "OR"
+
     def where(self,conditions='',connection="AND"):
         '''
         where条件
